@@ -24,10 +24,22 @@
         return api;
 
         function findWebsiteById(websiteId) {
-
+            var resultSet = [];
+            for(var i in websites) {
+                if(websites[i]._id === websiteId) {
+                    return websites[i];
+                }
+            }
+            return null;
         }
-        function updateWebsite(websiteId) {
-
+        function updateWebsite(websiteId, website) {
+            for(var i in websites) {
+                if(websites[i]._id === websiteId) {
+                    websites[i] =  website;
+                    return true;
+                }
+            }
+            return false;
         }
         function deleteWebsite(websiteId) {
             for(var i in websites) {
