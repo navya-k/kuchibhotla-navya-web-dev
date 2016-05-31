@@ -2,13 +2,16 @@
     <h1>Register</h1>
     <input type="text"
            class="form-control"
+           ng-model="model.user.username"
            placeholder="username"/>
     <input type="password"
            class="form-control"
+           ng-model="model.user.password"
            placeholder="password"/>
     <input type="password"
            class="form-control"
-           placeholder="very password"/>
+           ng-model="model.user.verifypass"
+           placeholder="verify password"/>
     <a class="btn btn-primary btn-block"
        ng-click="model.createUser(model.user)">Register</a>
     <a class="btn btn-danger  btn-block"

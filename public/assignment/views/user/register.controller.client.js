@@ -3,20 +3,19 @@
         .module("WebAppMaker")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($routeParams, UserService) {
+    function RegisterController($location, UserService) {
         var vm = this;
 
-        vm.updateUser = updateUser;
+        vm.createUser = createUser;
 
-        var id = $routeParams.id;
+        function createUser(newUser) {
+            var userCreated = UserService.createUser(newUser);
+            if(userCreated) {
+                $location.url("/user/"+userCreated._id);
+            } else {
+                vm.error = "Unable to register user";
+            }
 
-        function init() {
-            vm.user = UserService.findUserById(id);
-        }
-        init();
-
-        function updateUser(newUser) {
-            UserService.updateUser(id, newUser);
         }
     }
 })();
