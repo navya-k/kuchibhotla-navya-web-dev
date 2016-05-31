@@ -71,6 +71,7 @@
             }
             return false;
         }
+        
         function deleteUser(userId) {
 
             for(var i in users) {

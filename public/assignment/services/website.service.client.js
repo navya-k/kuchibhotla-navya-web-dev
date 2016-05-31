@@ -17,10 +17,18 @@
         var api = {
             createWebsite: createWebsite,
             findWebsitesForUserId: findWebsitesForUserId,
+            findWebsiteById : findWebsiteById,
+            updateWebsite : updateWebsite,
             deleteWebsite: deleteWebsite
         };
         return api;
 
+        function findWebsiteById(websiteId) {
+
+        }
+        function updateWebsite(websiteId) {
+
+        }
         function deleteWebsite(websiteId) {
             for(var i in websites) {
                 if(websites[i]._id === websiteId) {

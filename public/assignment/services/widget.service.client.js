@@ -17,12 +17,63 @@
 
     function WidgetService() {
         var api = {
-            findWidgetsForPageId: findWidgetsForPageId
+            createWidget: createWidget,
+            findWidgetsForPageId: findWidgetsForPageId,
+            findWidgetById: findWidgetById,
+            updateWidget: updateWidget,
+            deleteWidget: deleteWidget
         };
         return api;
 
+        function createWidget(pageId, widget) {
+            var newWidget = {
+                _id: (new Date()).getTime()+"",
+                pageId: pageId,
+                widgetType: widget.widgetType,
+            };
+            widgets.push(newWidget);
+            return newWidget;
+        }
+
+        function findWidgetById(widgetId) {
+            var resultSet = [];
+            for(var i in widgets) {
+                if(widgets[i]._id === widgetId) {
+                    return widgets[i];
+                }
+            }
+            return null;
+        }
+
         function findWidgetsForPageId(pageId) {
-            return widgets;
+            var resultSet = [];
+            for(var i in widgets) {
+                if(widgets[i].pageId === pageId) {
+                    resultSet.push(widgets[i]);
+                }
+            }
+            return resultSet;
+        }
+
+        function updateWidget(id, widget) {
+            for(var i in widgets) {
+                if(widgets[i]._id === id) {
+                    widgets[i] = widget;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function deleteWidget(id) {
+
+            for(var i in widgets) {
+                if(widgets[i]._id === id) {
+                    widgets.splice(i, 1);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 })();
