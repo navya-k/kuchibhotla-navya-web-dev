@@ -36,6 +36,11 @@
                 controller: "EditWebsiteController",
                 controllerAs: "model"
             })
+            .when("/user/:uid/website/:wid/page/:pid/widget", {
+                templateUrl: "views/widget/widget-list.view.client.html",
+                controller: "WidgetListController",
+                controllerAs: "model"
+            })
             .otherwise ({
                 redirectTo : "/"
             });

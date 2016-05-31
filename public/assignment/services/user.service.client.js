@@ -21,7 +21,10 @@
 
         return api;
 
-        function createUser(newUser) {}
+        function createUser(newUser) {
+            websites.push(newUser);
+            return newUser;
+        }
         function deleteUser(userId) {}
         function updateUser(id, newUser) {
             for(var i in users) {
