@@ -53,17 +53,15 @@
                 controller: "EditPageController",
                 controllerAs: "model"
             })
-            .when("/user/:uid/website/:wid/page/:pid/widget", {
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget", {
                 templateUrl: "views/widget/widget-list.view.client.html",
                 controller: "WidgetListController",
                 controllerAs: "model"
             })
-            .when("/user/:uid/website/:wid/page/:pid/widget/new", {
-                templateUrl: "views/widget/widget-choose.view.client.html",
-                controller: "WidgetListController",
-                controllerAs: "model"
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget/new", {
+                templateUrl: "views/widget/widget-choose.view.client.html"
             })
-            .when("/user/:uid/website/:wid/page/:pid/widget/:wgid", {
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget/:widgetId", {
                 templateUrl: "views/widget/widget-edit.view.client.html",
                 controller: "WidgetListController",
                 controllerAs: "model"
