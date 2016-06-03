@@ -9,13 +9,23 @@
         vm.createUser = createUser;
 
         function createUser(newUser) {
-            var userCreated = UserService.createUser(newUser);
-            if(userCreated) {
-                $location.url("/user/"+userCreated._id);
-            } else {
-                vm.error = "Unable to register user";
-            }
 
+            if (newUser.password === newUser.verifypass) {
+                UserService
+                    .createUser(newUser)
+                    .then(function (response) {
+                        var user = response.data;
+                        if (user) {
+                            $location.url("/user/" + user._id);
+                        }
+                        else {
+                            vm.error = "unable to create user.";
+                        }
+                    });
+            }
+            else {
+                vm.error = "passwords do not match.";
+            }
         }
     }
 })();

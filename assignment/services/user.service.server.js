@@ -33,8 +33,11 @@ module.exports = function(app) {
         }
     }
 
-    function createUser() {
-
+    function createUser(req, res) {
+        var user = req.body;
+        user._id = new Date().getTime()+"";
+        users.push(user);
+        res.send(user);
     }
 
     function findUserByUsername (username, res) {
@@ -59,7 +62,7 @@ module.exports = function(app) {
         res.send({});
     }
 
-    function findUserById () {
+    function findUserById (req, res) {
 
         var id = req.params.userId;
         for(var i in users) {
