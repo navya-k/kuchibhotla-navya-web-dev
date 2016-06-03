@@ -74,12 +74,31 @@ module.exports = function(app) {
         res.send({});
     }
 
-    function updateUser() {
-
+    function updateUser(req, res) {
+        var id = req.params.userId;
+        var newUser = req.body;
+        for(var i in users) {
+            if(users[i]._id === id) {
+                users[i].firstName = newUser.firstName;
+                users[i].lastName = newUser.lastName;
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.sendStatus(400);
     }
 
-    function deleteUser () {
+    function deleteUser (req, res) {
 
+        var id = req.params.userId;
+        for(var i in users) {
+            if (users[i]._id === id) {
+                users.splice(i, 1);
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.sendStatus(400);
     }
 
 
