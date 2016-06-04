@@ -34,10 +34,14 @@ module.exports = function(app) {
     }
 
     function findAllWebsitesForUser(req, res) {
-        var user = req.body;
-        user._id = new Date().getTime()+"";
-        users.push(user);
-        res.send(user);
+        var userId = req.params.userId;
+        var resultSet = [];
+        for(var i in websites) {
+            if(websites[i].developerId === userId) {
+                resultSet.push(websites[i]);
+            }
+        }
+        res.json(resultSet);
     }
 
     function findWebsiteById (username, res) {
