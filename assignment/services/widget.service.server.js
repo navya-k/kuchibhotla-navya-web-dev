@@ -3,6 +3,9 @@
  */
 module.exports = function(app) {
 
+    var multer = require('multer'); // npm install multer --save
+    var upload = multer({ dest: __dirname+'/../../public/uploads' });
+
     var widgets = [
         { "_id": "123", "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"},
         { "_id": "234", "widgetType": "HEADER", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
@@ -15,6 +18,7 @@ module.exports = function(app) {
         { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
     ];
 
+    app.post ("/api/uploads", upload.single('myFile'), uploadImage);
     app.post("/api/page/:pageId/widget", createWidget);
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
     app.get("/api/widget/:widgetId", findWidgetById);
@@ -22,58 +26,51 @@ module.exports = function(app) {
     app.delete(" /api/widget/:widgetId", deleteWidget);
 
     function createWidget(req, res){
-        var username = req.query.username;
-        var password = req.query.password;
 
-        if(username && password) {
-            findUserByCredentials(username, password, res);
-        }
-        else if(username) {
-            findUserByUsername(username, res);
-        }
-        else {
-            res.send(users);
-        }
     }
 
     function findAllWidgetsForPage(req, res) {
-        var user = req.body;
-        user._id = new Date().getTime()+"";
-        users.push(user);
-        res.send(user);
+
     }
 
-    function findWidgetById (username, res) {
-
-        for(var i in users) {
-            if(users[i].username === username) {
-                res.send(users[i]);
+    function findWidgetById (req, res) {
+        var widgetId = req.params.widgetId;
+        for(var i in widgets) {
+            if(widgets[i]._id === widgetId) {
+                res.json(widgets[i]);
                 return;
             }
         }
-        res.send({});
+        res.status(404).send("Widget not found");
     }
 
     function updateWidget(username, password, res) {
 
-        for(var i in users) {
-            if(users[i].username === username && users[i].password === password) {
-                res.send(users[i]);
-                return;
-            }
-        }
-        res.send({});
     }
 
     function deleteWidget (req, res) {
 
-        var id = req.params.userId;
-        for(var i in users) {
-            if(users[i]._id === id) {
-                res.send(users[i]);
-                return;
+    }
+
+    function uploadImage(req, res) {
+
+        var widgetId      = req.body.widgetId;
+        var width         = req.body.width;
+        var myFile        = req.file;
+
+        var originalname  = myFile.originalname; // file name on user's computer
+        var filename      = myFile.filename;     // new file name in upload folder
+        var path          = myFile.path;         // full path of uploaded file
+        var destination   = myFile.destination;  // folder where file is saved to
+        var size          = myFile.size;
+        var mimetype      = myFile.mimetype;
+
+        for(var i in widgets) {
+            if(widgets[i]._id === widgetId) {
+                widgets[i].url = "/uploads/"+filename;
             }
         }
-        res.send({});
+        res.redirect("/assignment/#/user/:uid/website/:wid/page/:pid/widget/"+widgetId);
     }
+
 };
