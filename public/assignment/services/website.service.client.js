@@ -4,7 +4,7 @@
         .module("WebAppMaker")
         .factory("WebsiteService", WebsiteService);
 
-    function WebsiteService() {
+    function WebsiteService($http) {
         var api = {
             createWebsite: createWebsite,
             findWebsitesForUserId: findWebsitesForUserId,
@@ -54,7 +54,8 @@
         }
 
         function findWebsitesForUserId(userId) {
-            
+            var url = "/api/user/"+ userId+"/website";
+            return $http.get(url);
         }
     }
 
