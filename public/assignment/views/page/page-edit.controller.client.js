@@ -25,10 +25,10 @@
             PageService
                 .deletePage(pageId)
                 .then(
-                function(){
+                function(response){
                     $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
                 },
-                function() {
+                function(error) {
                     vm.error = "Unable to delete page"
                 }
             );

@@ -37,10 +37,10 @@
             WebsiteService
                 .deleteWebsite(websiteId)
                 .then(
-                    function(){
+                    function(response){
                         $location.url("/user/"+vm.userId+"/website");
                     },
-                    function() {
+                    function(error) {
                         vm.error = "Unable to delete website"
                     }
                 );
