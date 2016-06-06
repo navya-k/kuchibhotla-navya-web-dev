@@ -23,14 +23,25 @@ module.exports = function(app) {
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId",  updateWidget);
-    app.delete(" /api/widget/:widgetId", deleteWidget);
+    app.delete("/api/widget/:widgetId", deleteWidget);
 
     function createWidget(req, res){
-
+        var widget = req.body;
+        widget._id = new Date().getTime()+"";
+        widgets.push(widget);
+        res.send(widget);
     }
 
     function findAllWidgetsForPage(req, res) {
 
+        var pageId = req.params.pageId;
+        var resultSet = [];
+        for(var i in widgets) {
+            if(widgets[i].pageId === pageId) {
+                resultSet.push(widgets[i]);
+            }
+        }
+        res.json(resultSet);
     }
 
     function findWidgetById (req, res) {
@@ -44,11 +55,31 @@ module.exports = function(app) {
         res.status(404).send("Uable to find Widget with id: "+widgetId);
     }
 
-    function updateWidget(username, password, res) {
+    function updateWidget(req, res) {
 
+        var id = req.params.widgetId;
+        var newWidget = req.body;
+        for(var i in widgets) {
+            if(widgets[i]._id === id) {
+                widgets[i] = newWidget;
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.sendStatus(400);
     }
 
     function deleteWidget (req, res) {
+
+        var id = req.params.widgetId;
+        for(var i in widgets) {
+            if(widgets[i]._id === id) {
+                widgets.splice(i, 1);
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.sendStatus(400);
 
     }
 
@@ -56,6 +87,9 @@ module.exports = function(app) {
 
         var widgetId      = req.body.widgetId;
         var width         = req.body.width;
+        var userId         = req.body.userId;
+        var websiteId      = req.body.websiteId;
+        var pageId         = req.body.pageId;
         var myFile        = req.file;
 
         var originalname  = myFile.originalname; // file name on user's computer
@@ -70,7 +104,7 @@ module.exports = function(app) {
                 widgets[i].url = "/uploads/"+filename;
             }
         }
-        res.redirect("/assignment/#/user/:uid/website/:wid/page/:pid/widget/"+widgetId);
+        res.redirect("/assignment/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
     }
 
 };

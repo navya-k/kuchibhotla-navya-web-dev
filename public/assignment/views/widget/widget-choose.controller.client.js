@@ -15,37 +15,51 @@
         function createHeaderWidget(pageId) {
             var headerWidget = {
                 widgetType: "HEADER"
-            }
-            var newWidget = WidgetService.createWidget(pageId, headerWidget);
-            if(newWidget) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+newWidget._id);
-            } else {
-                vm.error = "Unable to create widget";
-            }
+            };
+            WidgetService
+                .createWidget(pageId, headerWidget)
+                .then(function(response){
+
+                    var newWidget = response.data;
+                    if(newWidget) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+newWidget._id);
+                    } else {
+                        vm.error = "Unable to create widget";
+                    }
+                });
         }
 
         function createImageWidget(pageId) {
             var imageWidget = {
                 widgetType: "IMAGE"
-            }
-            var newWidget = WidgetService.createWidget(pageId, imageWidget);
-            if(newWidget) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+newWidget._id);
-            } else {
-                vm.error = "Unable to create widget";
-            }
+            };
+            WidgetService
+                .createWidget(pageId, imageWidget)
+                .then(function (response) {
+                    var newWidget = response.data;
+                    if (newWidget) {
+                        $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + newWidget._id);
+                    } else {
+                        vm.error = "Unable to create widget";
+                    }
+                });
         }
 
         function createYouTubeWidget(pageId) {
             var youtubeWidget = {
                 widgetType: "YOUTUBE"
-            }
-            var newWidget = WidgetService.createWidget(pageId, youtubeWidget);
-            if(newWidget) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+newWidget._id);
-            } else {
-                vm.error = "Unable to create widget";
-            }
+            };
+            WidgetService
+                .createWidget(pageId, youtubeWidget)
+                .then(function(response){
+                    var newWidget = response.data;
+                    if(newWidget) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+newWidget._id);
+                    } else {
+                        vm.error = "Unable to create widget";
+                    }
+                });
+
         }
     }
 })();
