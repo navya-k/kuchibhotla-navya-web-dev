@@ -24,7 +24,7 @@
                 .updateWebsite(websiteId, website)
                 .then(
                     function(response) {
-                        vm.success = "Updated successfully";
+                        $location.url("/user/"+vm.userId+"/website");
                     },
                     function(error) {
                         vm.error = "Unable to update website"

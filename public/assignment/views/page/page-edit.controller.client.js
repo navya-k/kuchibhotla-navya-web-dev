@@ -39,7 +39,7 @@
                 .updatePage(pageId, page)
                 .then(
                 function(response) {
-                    vm.success = "Updated successfully";
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
                 },
                 function(error) {
                     vm.error = "Unable to update page"
