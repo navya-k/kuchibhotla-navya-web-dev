@@ -37,16 +37,41 @@ module.exports = function(app) {
         res.json(resultSet);
     }
 
-    function findWebsiteById (username, res) {
- 
+    function findWebsiteById (req, res) {
+        var websiteId = req.params.websiteId;
+        var resultSet = [];
+        for(var i in websites) {
+            if(websites[i]._id === websiteId) {
+                res.send(websites[i]);
+                return ;
+            }
+        }
+        res.send({});
     }
 
-    function updateWebsite(username, password, res) {
- 
+    function updateWebsite(req, res) {
+        var websiteId = req.params.websiteId;
+        var newSite = req.body;
+        for(var i in websites) {
+            if(websites[i]._id === websiteId) {
+                websites[i] = newSite;
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.sendStatus(400);
     }
 
     function deleteWebsite (req, res) {
 
-        
+        var websiteId = req.params.websiteId;
+        for(var i in websites) {
+            if(websites[i]._id === websiteId) {
+                websites.splice(i, 1);
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.sendStatus(400);
     }
 };

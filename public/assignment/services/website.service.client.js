@@ -15,31 +15,17 @@
         return api;
 
         function findWebsiteById(websiteId) {
-            var resultSet = [];
-            for(var i in websites) {
-                if(websites[i]._id === websiteId) {
-                    return websites[i];
-                }
-            }
-            return null;
+            var url = "/api/website/"+websiteId;
+            return $http.get(url);
         }
+        
         function updateWebsite(websiteId, website) {
-            for(var i in websites) {
-                if(websites[i]._id === websiteId) {
-                    websites[i] =  website;
-                    return true;
-                }
-            }
-            return false;
+            var url = "/api/website/"+websiteId;
+            return $http.put(url,website);
         }
         function deleteWebsite(websiteId) {
-            for(var i in websites) {
-                if(websites[i]._id === websiteId) {
-                    websites.splice(i, 1);
-                    return true;
-                }
-            }
-            return false;
+            var url = "/api/website/" + websiteId;
+            return $http.delete(url);
         }
 
         function createWebsite(developerId, name, desc) {
@@ -49,8 +35,6 @@
                 developerId: developerId
             };
             return $http.post("/api/user/"+developerId+"/website",newWebsite);
-            // websites.push(newWebsite);
-            // return newWebsite;
         }
 
         function findWebsitesForUserId(userId) {
