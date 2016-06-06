@@ -17,7 +17,6 @@
 
         function createUser(newUser) {
                 var user = {
-                    _id: (new Date()).getTime() + "",
                     username: newUser.username,
                     password: newUser.password
                 };

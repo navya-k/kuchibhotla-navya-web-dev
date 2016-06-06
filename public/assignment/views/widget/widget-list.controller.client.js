@@ -13,6 +13,7 @@
 
         function init() {
             vm.widgets = WidgetService.findWidgetsForPageId(vm.pageId);
+            $(".container").sortable({axis: "y"});
         }
         init();
 
