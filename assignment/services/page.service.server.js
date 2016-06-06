@@ -17,58 +17,25 @@ module.exports = function(app) {
     app.delete("/api/page/:pageId", deletePage);
 
     function createPage(req, res){
-        var username = req.query.username;
-        var password = req.query.password;
-
-        if(username && password) {
-            findUserByCredentials(username, password, res);
-        }
-        else if(username) {
-            findUserByUsername(username, res);
-        }
-        else {
-            res.send(users);
-        }
+        
     }
 
     function findAllPagesForWebsite(req, res) {
-        var user = req.body;
-        user._id = new Date().getTime()+"";
-        users.push(user);
-        res.send(user);
+         
     }
 
     function findPageById (username, res) {
 
-        for(var i in users) {
-            if(users[i].username === username) {
-                res.send(users[i]);
-                return;
-            }
-        }
-        res.send({});
+        
     }
 
     function updatePage(username, password, res) {
 
-        for(var i in users) {
-            if(users[i].username === username && users[i].password === password) {
-                res.send(users[i]);
-                return;
-            }
-        }
-        res.send({});
+       
     }
 
     function deletePage (req, res) {
 
-        var id = req.params.userId;
-        for(var i in users) {
-            if(users[i]._id === id) {
-                res.send(users[i]);
-                return;
-            }
-        }
-        res.send({});
+        
     }
 };

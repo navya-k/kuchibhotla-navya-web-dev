@@ -41,7 +41,7 @@ module.exports = function(app) {
                 return;
             }
         }
-        res.status(404).send("Widget not found");
+        res.status(404).send("Uable to find Widget with id: "+widgetId);
     }
 
     function updateWidget(username, password, res) {
