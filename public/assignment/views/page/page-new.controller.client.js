@@ -11,12 +11,18 @@
         vm.createPage = createPage;
 
         function createPage(webId, page) {
-            var newPage = PageService.createPage(webId, page);
-            if(newPage) {
-                $location.url("/user/"+vm.userId+"/website/"+webId+"/page");
-            } else {
-                vm.error = "Unable to create page";
-            }
+            PageService
+                .createPage(webId, page)
+                .then(function(response){
+
+                    var newPage = response.data;
+                    if(newPage) {
+                        $location.url("/user/"+vm.userId+"/website/"+webId+"/page");
+                    } else {
+                        vm.error = "Unable to create page";
+                    }
+                });
+
         }
     }
 })();
