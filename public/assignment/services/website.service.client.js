@@ -44,13 +44,13 @@
 
         function createWebsite(developerId, name, desc) {
             var newWebsite = {
-                _id: (new Date()).getTime()+"",
                 name: name,
                 description: desc,
                 developerId: developerId
             };
-            websites.push(newWebsite);
-            return newWebsite;
+            return $http.post("/api/user/"+developerId+"/website",newWebsite);
+            // websites.push(newWebsite);
+            // return newWebsite;
         }
 
         function findWebsitesForUserId(userId) {

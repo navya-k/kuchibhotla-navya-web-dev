@@ -18,19 +18,12 @@ module.exports = function(app) {
     app.put("/api/website/:websiteId", updateWebsite);
     app.delete("/api/website/:websiteId", deleteWebsite);
 
-    function createWebsite(req, res){
-        var username = req.query.username;
-        var password = req.query.password;
-
-        if(username && password) {
-            findUserByCredentials(username, password, res);
-        }
-        else if(username) {
-            findUserByUsername(username, res);
-        }
-        else {
-            res.send(users);
-        }
+    function createWebsite(req, res){ 
+        var website = req.body;
+        website._id = new Date().getTime()+"";
+        websites.push(website);
+        res.send(website);
+         
     }
 
     function findAllWebsitesForUser(req, res) {
@@ -45,36 +38,15 @@ module.exports = function(app) {
     }
 
     function findWebsiteById (username, res) {
-
-        for(var i in users) {
-            if(users[i].username === username) {
-                res.send(users[i]);
-                return;
-            }
-        }
-        res.send({});
+ 
     }
 
     function updateWebsite(username, password, res) {
-
-        for(var i in users) {
-            if(users[i].username === username && users[i].password === password) {
-                res.send(users[i]);
-                return;
-            }
-        }
-        res.send({});
+ 
     }
 
     function deleteWebsite (req, res) {
 
-        var id = req.params.userId;
-        for(var i in users) {
-            if(users[i]._id === id) {
-                res.send(users[i]);
-                return;
-            }
-        }
-        res.send({});
+        
     }
 };
