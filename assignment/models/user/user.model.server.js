@@ -14,7 +14,9 @@ module.exports = function(){
         findUserById            : findUserById,
         findUserByCredentials   : findUserByCredentials,
         findUserByUsername      : findUserByUsername,
-        updateUser              : updateUser
+        updateUser              : updateUser,
+        deleteUser              : deleteUser,
+        getUsers                : getUsers
     };
     
     return api;
@@ -44,5 +46,13 @@ module.exports = function(){
                     lastName    : user.lastName
                 }
             });
+    }
+
+    function deleteUser(userId){
+        return User.remove({_id : userId});
+    }
+
+    function getUsers(){
+        return User.find();
     }
 };

@@ -13,6 +13,8 @@ module.exports = function() {
         firstName   : String,
         lastName    : String,
         dob         : Date,
+        email       : String,
+        phone       : String,
         dateCreated : {type: Date, default : Date.now}
     }, {collection : "assignment.user"});
     

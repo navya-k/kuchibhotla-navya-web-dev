@@ -4,12 +4,6 @@
 module.exports = function(app, models) {
 
     var userModel = models.userModel;
-    var users = [
-        {_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"},
-        {_id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley"},
-        {_id: "345", username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia"},
-        {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi"}
-    ];
 
     app.get("/api/user", getUsers);
     app.post("/api/user", createUser);
@@ -30,7 +24,16 @@ module.exports = function(app, models) {
             findUserByUsername(username, res);
         }
         else {
-            res.send(users);
+            userModel
+                .getUsers()
+                .then(
+                    function(users) {
+                        res.json(users);
+                    },
+                    function(err){
+                        res.statusCode(400).send(err);
+                    }
+                );
         }
     }
 
@@ -40,7 +43,7 @@ module.exports = function(app, models) {
             .createUser(user)
             .then(
                 function(user) {
-                    res.send(user);
+                    res.json(user);
                 },
                 function(err){
                     res.statusCode(400).send(err);
@@ -54,7 +57,7 @@ module.exports = function(app, models) {
             .findUserByUsername(username)
             .then(
                 function(user){
-                    res.send(user);
+                    res.json(user);
                 },
                 function(err){
                     res.statusCode(404).send(err);
@@ -68,7 +71,7 @@ module.exports = function(app, models) {
             .findUserByCredentials(username, password)
             .then(
                 function(user){
-                    res.send(user);
+                    res.json(user);
                 },
                 function(err){
                     res.statusCode(404).send(err);
@@ -82,7 +85,7 @@ module.exports = function(app, models) {
             .findUserById(id)
             .then(
                 function(user){
-                    res.send(user);
+                    res.json(user);
                 },
                 function(err){
                     res.statusCode(404).send(err);
@@ -100,7 +103,7 @@ module.exports = function(app, models) {
                     res.sendStatus(200);
                 },
                 function(err){
-                    res.statusCode(400).send(err);
+                    res.statusCode(404).send(err);
                 }
             );
     }
@@ -108,15 +111,17 @@ module.exports = function(app, models) {
     function deleteUser (req, res) {
 
         var id = req.params.userId;
-        for(var i in users) {
-            if (users[i]._id === id) {
-                users.splice(i, 1);
-                res.sendStatus(200);
-                return;
-            }
-        }
-        res.sendStatus(400);
+
+        userModel
+            .deleteUser(id)
+            .then(
+                function (stats) {
+                    res.sendStatus(200);
+                },
+                function (err) {
+                    res.statusCode(404).send(err);
+                }
+
+            );
     }
-
-
 };
