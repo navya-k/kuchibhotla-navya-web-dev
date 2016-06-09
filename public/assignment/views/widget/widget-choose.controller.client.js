@@ -14,7 +14,7 @@
 
         function createHeaderWidget(pageId) {
             var headerWidget = {
-                widgetType: "HEADER"
+                type: "HEADING"
             };
             WidgetService
                 .createWidget(pageId, headerWidget)
@@ -31,7 +31,7 @@
 
         function createImageWidget(pageId) {
             var imageWidget = {
-                widgetType: "IMAGE"
+                type: "IMAGE"
             };
             WidgetService
                 .createWidget(pageId, imageWidget)
@@ -47,7 +47,7 @@
 
         function createYouTubeWidget(pageId) {
             var youtubeWidget = {
-                widgetType: "YOUTUBE"
+                type: "YOUTUBE"
             };
             WidgetService
                 .createWidget(pageId, youtubeWidget)
