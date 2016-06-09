@@ -17,6 +17,7 @@
         function createPage(webId, page) {
             var newpage = {
                 name: page.name,
+                description : page.description,
                 websiteId : webId
 
             };
@@ -41,6 +42,5 @@
             var url = "/api/page/"+id;
             return $http.delete(url);
         }
-
     }
 })();
