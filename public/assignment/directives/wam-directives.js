@@ -25,13 +25,11 @@
                 stop : function(event, ui){
 
                     end = ui.item.index();
-                    console.log("sort stopped " +
-                        ""+end);
-                    var sortedElement = scope.data.splice(start, 1)[0];
-                    scope.data.splice(end, 0, sortedElement);
-                    console.log(scope.data);
-
-                    scope.$apply();
+                    console.log("sort stopped "+end);
+                    // var sortedElement = scope.data.splice(start, 1)[0];
+                    // scope.data.splice(end, 0, sortedElement);
+                    // console.log(scope.data);
+                    // scope.$apply();
                     scope.callback({start :start, end : end});
                     
                 }

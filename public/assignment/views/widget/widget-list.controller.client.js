@@ -35,14 +35,14 @@
         }
 
         function reorder(start, end) {
-            console.log("ExperimentsController");
+            console.log("Widget List Controller");
             console.log(start);
             console.log(end);
             WidgetService
                 .reorderWidget(vm.pageId, start, end)
                 .then(
                     function(response){
-                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                        init();//$location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
                     },
                     function(err){
                         vm.error = "Unable to update widget order"

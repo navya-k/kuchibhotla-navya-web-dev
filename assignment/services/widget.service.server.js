@@ -14,8 +14,8 @@ module.exports = function(app, models) {
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId",  updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
-    app.put("/api/page/:pageId/widget",reorderWidget); 
-    
+    app.put("/api/page/:pageId/widget", reorderWidget);
+
     function createWidget(req, res){
         var widget = req.body;
         var pageId = req.params.pageId;
@@ -130,7 +130,7 @@ module.exports = function(app, models) {
             .reorderWidget(start,end)
             .then(
                 function(stats){
-                    res.send(200);
+                    res.sendStatus(200);
                 },
                 function(err){
                     res.statusCode(400).send(err);
