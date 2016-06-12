@@ -21,9 +21,9 @@
 </nav>
 
 
-<div class="container">
 
-    <div ng-repeat="widget in model.widgets" class="jga-widget">
+    <wam-sortable data="model.widgets" callback="model.reorder(start, end)"></wam-sortable>
+    <!--<div ng-repeat="widget in model.widgets" class="jga-widget">
         <div class="jga-widget-tool">
             <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{widget._page}}/widget/{{widget._id}}">
                 <span class="glyphicon glyphicon-cog"></span>
@@ -52,9 +52,9 @@
                 Unable to render widget
             </div>
         </div>
-    </div>
+    </div>-->
 
-</div>
+
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">

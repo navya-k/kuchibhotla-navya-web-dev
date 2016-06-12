@@ -47,6 +47,25 @@ module.exports = function() {
     }
 
     function reorderWidget(pageId, start, end) {
-        //  return User.remove({_id: userId});
+        return Widget
+            .find(function(err, widgets){
+                widgets.forEach(function(widget){
+                    if(start < end) {
+                        if(widget.order >= start && widget.order < end) {
+                            widget.order--;
+                            widget.save();
+                        } else if(widget.order === start) {
+                            widget.order = end;
+                        }
+                    } else {
+                        if(widget.order >= end && widget.order < start) {
+                            widget.order++;
+                            widget.save();
+                        } else if(widget.order === start) {
+                            widget.order = end;
+                        }
+                    }
+                });
+            });
     }
 };
