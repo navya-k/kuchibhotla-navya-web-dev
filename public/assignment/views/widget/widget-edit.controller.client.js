@@ -15,7 +15,9 @@
                 .findWidgetById(vm.widgetId)
                 .then(function(response){
                     vm.widget = response.data;
-                    vm.widget.size = vm.widget.size+"";
+                    if(vm.widget.type === "HEADING"){
+                        vm.widget.size = vm.widget.size+"";
+                    }
                 });
         }
         init();

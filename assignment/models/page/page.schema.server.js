@@ -11,6 +11,7 @@ module.exports = function() {
         _website    : {type: mongoose.Schema.ObjectId , ref : "Website"},
         name        : {type: String, required: true},
         description : String,
+        widgets    : [{type: mongoose.Schema.Types.ObjectId, ref: "Widget"}],
         dateCreated : {type: Date, default : Date.now}
     }, {collection : "assignment.page"});
     
