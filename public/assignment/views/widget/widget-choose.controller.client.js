@@ -11,7 +11,9 @@
         vm.createHeaderWidget = createHeaderWidget;
         vm.createImageWidget = createImageWidget;
         vm.createYouTubeWidget = createYouTubeWidget;
-
+        vm.createHTMLWidget = createHTMLWidget;
+        vm.createTextInputWidget = createTextInputWidget;
+        
         function createHeaderWidget(pageId) {
             var headerWidget = {
                 type: "HEADING"
@@ -61,5 +63,40 @@
                 });
 
         }
+
+        function createHTMLWidget(pageId) {
+            var headerWidget = {
+                type: "HTML"
+            };
+            WidgetService
+                .createWidget(pageId, headerWidget)
+                .then(function(response){
+
+                    var newWidget = response.data;
+                    if(newWidget) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+newWidget._id);
+                    } else {
+                        vm.error = "Unable to create widget";
+                    }
+                });
+        }
+        function createTextInputWidget(pageId) {
+            var headerWidget = {
+                type: "INPUT"
+            };
+            WidgetService
+                .createWidget(pageId, headerWidget)
+                .then(function(response){
+
+                    var newWidget = response.data;
+                    if(newWidget) {
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+newWidget._id);
+                    } else {
+                        vm.error = "Unable to create widget";
+                    }
+                });
+        }
+
+        
     }
 })();

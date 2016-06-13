@@ -18,18 +18,10 @@
                 axis :'y',
                 handle : ".handle",
                 start : function(event, ui){
-                    start = ui.item.index();
-                    console.log(scope.data);
-                    console.log("sort started "+start);
+                    start = ui.item.index(); 
                 },
                 stop : function(event, ui){
-
-                    end = ui.item.index();
-                    console.log("sort stopped "+end);
-                    // var sortedElement = scope.data.splice(start, 1)[0];
-                    // scope.data.splice(end, 0, sortedElement);
-                    // console.log(scope.data);
-                    // scope.$apply();
+                    end = ui.item.index();  
                     scope.callback({start :start, end : end});
                     
                 }

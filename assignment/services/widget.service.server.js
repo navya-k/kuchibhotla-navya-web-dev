@@ -78,19 +78,37 @@ module.exports = function(app, models) {
     }
 
     function deleteWidget (req, res) {
-
         var id = req.params.widgetId;
         widgetModel
-            .deleteWidget(id)
-            .then(
-                function(stats){
-                    res.sendStatus(200);
-                },
-                function(err){
-                    res.statusCode(404).send(err);
-                }
-            );
-
+            .findWidgetById(id)
+            .then(function(widget){
+                widgetModel
+                    .findAllWidgetsForPage(widget._page)
+                    .then(function(widgets){
+                        widgetModel
+                            .reorderWidget(widget._page, widget.order, widgets.length)
+                            .then(
+                                function(stats) {
+                                    widgetModel
+                                        .deleteWidget(id)
+                                        .then(
+                                            function(stats){
+                                                res.sendStatus(200);
+                                            },
+                                            function(err){
+                                                res.statusCode(400).send(err);
+                                            });
+                                },
+                                function(err){
+                                    res.statusCode(400).send(err);
+                                });
+                        },
+                        function(err){
+                            res.statusCode(400).send(err);
+                        });
+            },function(err){
+                res.statusCode(404).send(err);
+            });
     }
 
     function uploadImage(req, res) {
@@ -123,11 +141,11 @@ module.exports = function(app, models) {
     }
 
     function reorderWidget(req, res) {
-
+        var pageId = req.params.pageId;
         var start = parseInt(req.query.start);
         var end = parseInt(req.query.end);
         widgetModel
-            .reorderWidget(start,end)
+            .reorderWidget(pageId, start,end)
             .then(
                 function(stats){
                     res.sendStatus(200);

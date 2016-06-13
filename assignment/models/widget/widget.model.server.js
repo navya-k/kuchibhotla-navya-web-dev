@@ -10,12 +10,12 @@ module.exports = function() {
 
     var api = {
 
-        createWidget          : createWidget,
-        findAllWidgetsForPage : findAllWidgetsForPage,
-        findWidgetById        : findWidgetById,
-        updateWidget          : updateWidget,
-        deleteWidget          : deleteWidget,
-        reorderWidget         : reorderWidget
+        createWidget: createWidget,
+        findAllWidgetsForPage: findAllWidgetsForPage,
+        findWidgetById: findWidgetById,
+        updateWidget: updateWidget,
+        deleteWidget: deleteWidget,
+        reorderWidget: reorderWidget
 
     };
 
@@ -23,15 +23,23 @@ module.exports = function() {
 
     function createWidget(pageId, widget) {
         widget._page = pageId;
-        return Widget.create(widget);
+        return findAllWidgetsForPage(pageId)
+            .then(
+                function (widgets) {
+                    widget.order = widgets.length;
+                    return Widget.create(widget);
+                },
+                function (err) {
+                    return err;
+                });
     }
 
     function findAllWidgetsForPage(pageId) {
-        return Widget.find({"_page" : pageId});
+        return Widget.find({"_page": pageId});
     }
 
     function findWidgetById(widgetId) {
-       return Widget.findById(widgetId);
+        return Widget.findById(widgetId);
     }
 
     function updateWidget(widgetId, widget) {
@@ -42,20 +50,22 @@ module.exports = function() {
             });
     }
 
-    function deleteWidget(widgetId) {
-       return Widget.remove({_id: widgetId});
-    }
-
+    function deleteWidget(widgetId) { 
+        return Widget.remove({"_id" :widgetId});
+    } 
     function reorderWidget(pageId, start, end) {
         return Widget
-            .find(function(err, widgets){
+            .find({"_page" : pageId},function(err, widgets){
+
                 widgets.forEach(function(widget){
+
                     if(start < end) {
-                        if(widget.order >= start && widget.order < end) {
+                        if(widget.order > start && widget.order <= end) {
                             widget.order--;
                             widget.save();
                         } else if(widget.order === start) {
                             widget.order = end;
+                            widget.save();
                         }
                     } else {
                         if(widget.order >= end && widget.order < start) {
@@ -63,6 +73,7 @@ module.exports = function() {
                             widget.save();
                         } else if(widget.order === start) {
                             widget.order = end;
+                            widget.save();
                         }
                     }
                 });
