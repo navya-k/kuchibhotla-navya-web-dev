@@ -8,6 +8,7 @@
 
         vm.updateUser = updateUser;
         vm.unregister = unregister;
+        vm.logout = logout;
 
         var id = $routeParams.id;
 
@@ -31,6 +32,19 @@
                         vm.error = "Unable to update user"
                     }
                 );
+        }
+
+        function logout() {
+            UserService
+                .logout()
+                .then(
+                    function(response) {
+                        $location.url("/login");
+                    },
+                    function(err){
+                        $location.url("/login");
+                    }
+                )
         }
 
         function unregister() {
