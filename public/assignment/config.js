@@ -18,7 +18,7 @@
                 controller : "RegisterController",
                 controllerAs : "model"
             })
-            .when("/user/:id", {
+            .when("/user", {
                 templateUrl : "views/user/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
@@ -102,7 +102,7 @@
             });
 
         // q library within angular helps establish promises
-        function checkLoggedIn(UserService, $location, $q) {
+        function checkLoggedIn(UserService, $location, $q, $rootScope) {
 
             var deferred = $q.defer();
 
@@ -111,12 +111,14 @@
                 .then(
                     function(response){
                         var user = response.data;
-                        console.log(user);
+                        //console.log(user);
                         if(user == '0') {
+                            $rootScope.currentUser = null;
                             deferred.reject();
                             $location.url("/login");
                         }
                         else{
+                            $rootScope.currentUser = user;
                             deferred.resolve();
                         }
                     },

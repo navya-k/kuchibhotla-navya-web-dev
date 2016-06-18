@@ -12,7 +12,7 @@ module.exports = function(app, models) {
 
     app.get("/auth/facebook", passport.authenticate('facebook'));
     app.get("/auth/facebook/callback", passport.authenticate('facebook', {
-        successRedirect: '/assignment/#/profile',
+        successRedirect: '/assignment/#/user',
         failureRedirect: '/assignment/#/login'
     }));
     app.get("/api/user", getUsers);
@@ -40,7 +40,6 @@ module.exports = function(app, models) {
 
 
     function localStrategy(username, password, done) {
-        var hashPassword = bcrypt.hashSync(password);
         userModel
             .findUserByUsername(username)
             .then(

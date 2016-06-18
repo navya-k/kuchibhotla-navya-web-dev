@@ -17,13 +17,16 @@
                         function (response) {
                             var user = response.data;
                             if (user) {
-                                $location.url("/user/" + user._id);
+                                $rootScope.currentUser = user;
+                                $location.url("/user");
                             }
                             else {
+                                $rootScope.currentUser = null;
                                 vm.error = "unable to create user.";
                             }
                          },
                         function(err){
+                            $rootScope.currentUser = null;
                             vm.error = err;
                         }
                     );
