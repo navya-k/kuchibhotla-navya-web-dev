@@ -1,4 +1,5 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<form novalidate name="editWidgetForm">
+    <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
@@ -11,10 +12,12 @@
                 Widget Edit
             </a>
             <p class="navbar-text pull-right">
-                <a ng-click="model.updateWidget(model.widget._id, model.widget)" class="navbar-link">
+                <button type="submit"
+                       ng-click="editWidgetForm.$valid && model.updateWidget(model.widget._id, model.widget)"
+                       class="navbar-link okButton">
                   <span class="glyphicon glyphicon-ok">
                   </span>
-                </a>
+                </button>
             </p>
         </div>
     </div>
@@ -40,6 +43,8 @@
             <ng-include src="'views/widget/widget-text-input.view.client.html'"/>
         </div>
 </div>
+    </div>
+</form>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">

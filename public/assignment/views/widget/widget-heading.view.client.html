@@ -1,26 +1,37 @@
 <div class="container">
 
-    <form>
+
         <div class="form-group">
             <label for="widget-name">Name</label>
             <input type="text"
                    class="form-control"
                    ng-model="model.widget.name"
-                   id="widget-name">
+                   id="widget-name"
+            required
+            name="widgetname">
+            <div ng-show="editWidgetForm.widgetname.$invalid && editWidgetForm.$submitted"
+                 class="message">
+                Name is a required field.
+            </div>
         </div>
         <div class="form-group">
             <label for="widget-text">Text</label>
             <input type="text"
                    class="form-control"
                    ng-model="model.widget.text"
-                   id="widget-text">
+                   id="widget-text" required
+                   name="widgettext">
+            <div ng-show="editWidgetForm.widgettext.$invalid && editWidgetForm.$submitted"
+                 class="message">
+                Text is a required field.
+            </div>
         </div>
         <div class="form-group">
             <label for="widget-size">Size</label>
             <select name="size"
                     class="form-control"
                     ng-model="model.widget.size"
-                    id="widget-size">
+                    id="widget-size"   required>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -28,10 +39,13 @@
                 <option value="5">5</option>
                 <option value="6">6</option>
             </select>
+            <div ng-show="editWidgetForm.size.$invalid && editWidgetForm.$submitted"
+                 class="message">
+                Please specify a size.
+            </div>
         </div>
-    </form>
-
     <a class="btn btn-danger  btn-block"
        ng-click="model.deleteWidget(model.widget._id)">Delete</a>
 </div>
+ 
 

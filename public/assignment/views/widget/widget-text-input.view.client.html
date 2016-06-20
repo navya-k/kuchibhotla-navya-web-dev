@@ -1,5 +1,12 @@
 Name
-<input ng-model="model.widget.name" class="form-control"/>
+<input ng-model="model.widget.name"
+       class="form-control"
+       required
+       name="widgetname">
+<div ng-show="editWidgetForm.widgetname.$invalid && editWidgetForm.$submitted"
+     class="message">
+    Name is a required field.
+</div>
     Text
     <input ng-model="model.widget.text" class="form-control"/>
     Rows

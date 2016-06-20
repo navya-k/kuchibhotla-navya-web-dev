@@ -1,13 +1,19 @@
 
 <div class="container">
 
-    <form>
+
         <div class="form-group">
             <label for="widget-name">Name</label>
             <input type="text"
                    class="form-control"
                    ng-model="model.widget.name"
-                   id="widget-name">
+                   id="widget-name"
+                   required
+                   name="widgetname">
+            <div ng-show="editWidgetForm.widgetname.$invalid && editWidgetForm.$submitted"
+                 class="message">
+                Name is a required field.
+            </div>
         </div>
         <div class="form-group">
             <label for="widget-text">Text</label>
@@ -30,7 +36,7 @@
                    ng-model="model.widget.width"
                    id="widget-width">
         </div>
-    </form>
+
     <form id="widget-upload" action="/api/uploads"  method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="widget-upload">Upload</label>
@@ -42,10 +48,10 @@
             <input  name="pageId"  value="{{model.pageId}}" style="display: none"/>
             <button type="submit"   class="btn btn-block btn-primary">Upload Image</button>
         </div>
-    </form>
+</form>
     <a class="btn btn-primary  btn-block"
        href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{model.widget._id}}/flickr">Flickr Search</a>
     <a class="btn btn-danger  btn-block"
        ng-click="model.deleteWidget(model.widget._id)">Delete</a>
-</div>
+    </div>
 </div>
