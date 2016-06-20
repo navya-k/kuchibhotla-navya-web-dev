@@ -31,9 +31,6 @@
                         }
                     );
             }
-            else {
-                vm.error = "passwords do not match.";
-            }
         }
     }
 })();

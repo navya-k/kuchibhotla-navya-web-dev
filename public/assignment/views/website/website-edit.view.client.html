@@ -1,4 +1,5 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<form novalidate name="editWebsiteForm">
+    <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
@@ -11,10 +12,12 @@
                 Edit Website
             </a>
             <p class="navbar-text pull-right">
-                <a ng-click="model.updateWebsite(model.websiteId,model.website)"  class="navbar-link">
+                <button type="submit"
+                        ng-click="editWebsiteForm.$valid && model.updateWebsite(model.websiteId,model.website)"
+                        class="navbar-link okButton">
                   <span class="glyphicon glyphicon-ok">
                   </span>
-                </a>
+                </button>
             </p>
         </div>
     </div>
@@ -22,14 +25,20 @@
 
 <div class="container">
 
-    <form>
+
         <div class="form-group">
             <label for="website-name">Website Name</label>
             <input type="text"
                    class="form-control"
                    id="website-name"
                    ng-model="model.website.name"
-                   placeholder="Google">
+                   placeholder="Google"
+                    required
+            name="websitename">
+            <div ng-show="editWebsiteForm.websitename.$invalid && editWebsiteForm.$submitted"
+                 class="message">
+                Name is a required field.
+            </div>
         </div>
         <div class="form-group">
             <label for="website-description">Website Description</label>
@@ -39,10 +48,11 @@
                           ng-model="model.website.description"
                           placeholder="Description"></textarea>
         </div>
-    </form>
+
 
     <a ng-click="model.deleteWebsite(model.websiteId)" class="btn btn-danger  btn-block">Delete</a>
 </div>
+</form>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">

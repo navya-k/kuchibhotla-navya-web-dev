@@ -15,7 +15,7 @@
             name="username"
            autocorrect="off" autocapitalize="none"/>
     <div ng-show="loginForm.username.$invalid && loginForm.$submitted"
-         class="alert alert-danger">
+         class="message">
         Username is a required field.
     </div>
     <input type="password"
@@ -26,7 +26,7 @@
             name="password"
            autocorrect="off" autocapitalize="none"/>
         <div ng-show="loginForm.password.$invalid && loginForm.$submitted"
-             class="alert alert-danger">
+             class="message">
             Password is a required field.
         </div>
     <button ng-click="loginForm.$valid && model.login(username, password)"
@@ -38,9 +38,5 @@
        class="btn btn-primary btn-block">
         <span class="fa fa-facebook-official"/>
         Facebook</a>
-
-    {{loginForm.$submitted}}
-        {{loginForm.$valid}}
-
-        </form>
+    </form>
 </div>
