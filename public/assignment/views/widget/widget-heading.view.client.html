@@ -31,7 +31,7 @@
             <select name="size"
                     class="form-control"
                     ng-model="model.widget.size"
-                    id="widget-size"   required>
+                    id="widget-size">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -39,13 +39,10 @@
                 <option value="5">5</option>
                 <option value="6">6</option>
             </select>
-            <div ng-show="editWidgetForm.size.$invalid && editWidgetForm.$submitted"
-                 class="message">
-                Please specify a size.
-            </div>
+
         </div>
     <a class="btn btn-danger  btn-block"
        ng-click="model.deleteWidget(model.widget._id)">Delete</a>
 </div>
- 
+
 

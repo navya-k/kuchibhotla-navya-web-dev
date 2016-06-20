@@ -16,7 +16,8 @@
         
         function createHeaderWidget(pageId) {
             var headerWidget = {
-                type: "HEADING"
+                type: "HEADING",
+                size: 1
             };
             WidgetService
                 .createWidget(pageId, headerWidget)

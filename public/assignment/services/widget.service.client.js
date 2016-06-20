@@ -15,9 +15,13 @@
         return api;
 
         function createWidget(pageId, widget) {
+           
             var newWidget = {
                 type: widget.type
             };
+            if(widget.type === "HEADING"){
+                newWidget.size = widget.size;
+            }
             return $http.post("/api/page/"+pageId+"/widget",newWidget);
 
         }
