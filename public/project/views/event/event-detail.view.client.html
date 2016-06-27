@@ -18,6 +18,8 @@
 
                     <h4 class="event-detail"><strong>{{model.event.name}}</strong></h4>
                     <hr>
+                    <h4 class="event-detail">Start Date: <mydate>{{model.event.time | date:'MMM dd, yyyy'}}</mydate> </h4>
+
                     <h4 class="event-detail">Description:</h4>
 
                     <div ng-if="model.event.description" ng-bind-html="model.getDescription()"></div>

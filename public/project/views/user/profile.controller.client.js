@@ -51,13 +51,13 @@
         }
 
         function unregister() {
-            UserService
+            MemberService
                 .deleteUser(id)
                 .then(
-                    function(){
-                        $location.url("/login");
+                    function(stats){
+                       logout();
                     },
-                    function() {
+                    function(err) {
                         vm.error = "Unable to remove user."
                     }
                 );
