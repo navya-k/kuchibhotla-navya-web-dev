@@ -1,14 +1,14 @@
 (function(){
     angular
         .module("Project")
-        .controller("LoginController", LoginController);
+        .controller("SigninController", SigninController);
 
     
-    function LoginController($location, UserService, $rootScope) {
+    function SigninController($location, MemberService, $rootScope) {
         var vm = this;
 
         vm.login = function(username, password) {
-            UserService
+            MemberService
                 .login(username, password)
                 .then(function(response){
                     var user = response.data;

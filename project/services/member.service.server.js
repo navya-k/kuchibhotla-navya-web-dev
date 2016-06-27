@@ -21,7 +21,7 @@ module.exports = function(app, models) {
     app.post("/project/api/logout", logout);
     app.get("/project/api/loggedIn", loggedIn);
     app.post("/project/api/register", register);
-    app.post("project/api/login", passportProj.authenticate('proj'), login);
+    app.post("/project/api/login", passportProj.authenticate('proj'), login);
     app.get("/project/api/user?username=username", findUserByUsername);
     app.get("/project/api/user?username=username&password=password", findUserByCredentials);
     app.get("/project/api/user/:userId", findUserById);

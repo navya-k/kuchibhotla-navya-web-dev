@@ -1,21 +1,8 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand">
-                Profile
-            </a>
-            <p class="navbar-text pull-right">
-                <a ng-click="model.updateUser(model.user)"
-                   class="navbar-link">
-                  <span class="glyphicon glyphicon-ok">
-                  </span>
-                </a>
-            </p>
-        </div>
-    </div>
-</nav>
 
-<div class="container">
+<div class="container" ng-switch="model.user.userType">
+
+    <div ng-switch-when="user">
+
 
     <div ng-if="model.success" class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -59,20 +46,9 @@
        class="btn btn-danger  btn-block">Unregister</a>
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container">
-        <div class="row navbar-text">
-            <div class="col-xs-3 text-center">
-            </div>
-            <div class="col-xs-3 text-center">
-            </div>
-            <div class="col-xs-3 text-center">
-            </div>
-            <div class="col-xs-3 text-center">
-                <a href="#/user/{{model.user._id}}">
-                    <span class="glyphicon glyphicon-user"></span>
-                </a>
-            </div>
-        </div>
-    </div>
-</nav>
+
+<div ng-switch-when="admin">
+    admin PROFILE
+</div>
+
+</div>

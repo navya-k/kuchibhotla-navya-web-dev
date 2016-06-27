@@ -13,7 +13,7 @@
             })
             .when("/login", {
                 templateUrl : "views/user/signin.view.client.html",
-                controller : "LoginController",
+                controller : "SigninController",
                 controllerAs : "model"
             })
             .when("/register", {
@@ -105,11 +105,11 @@
             });
 
         // q library within angular helps establish promises
-        function checkLoggedIn(UserService, $location, $q, $rootScope) {
+        function checkLoggedIn(MemberService, $location, $q, $rootScope) {
 
             var deferred = $q.defer();
 
-            UserService
+            MemberService
                 .loggedIn()
                 .then(
                     function(response){

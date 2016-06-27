@@ -15,6 +15,7 @@ module.exports = function() {
         dob         : Date,
         email       : String,
         phone       : String,
+        userType    : {type: String, enum : ['user','admin']},
         google    : {
             token: String,
             id: String,

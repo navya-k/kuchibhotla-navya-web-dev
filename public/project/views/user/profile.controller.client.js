@@ -3,7 +3,7 @@
         .module("Project")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($location, $routeParams, UserService, $rootScope) {
+    function ProfileController($location, $routeParams, MemberService, $rootScope) {
         var vm = this;
 
         vm.updateUser = updateUser;
@@ -13,7 +13,7 @@
         var id = $rootScope.currentUser._id;
 
         function init() {
-            UserService
+            MemberService
                 .findUserById(id)
                 .then(function (response){
                     vm.user = response.data;
@@ -22,7 +22,7 @@
         init();
 
         function updateUser(newUser) {
-            UserService
+            MemberService
                 .updateUser(id, newUser)
                 .then(
                     function(response) {
@@ -35,7 +35,7 @@
         }
 
         function logout() {
-            UserService
+            MemberService
                 .logout()
                 .then(
                     function(response) {

@@ -23,6 +23,7 @@ module.exports = function(){
     return api;
     
     function createUser(user){
+        user.userType = "user";
         return Member.create(user);
     }
 

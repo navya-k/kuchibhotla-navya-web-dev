@@ -3,7 +3,7 @@
         .module("Project")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($location, UserService, $rootScope) {
+    function RegisterController($location, MemberService, $rootScope) {
         var vm = this;
 
         vm.createUser = createUser;
@@ -11,7 +11,7 @@
         function createUser(newUser) {
 
             if (newUser.password === newUser.verifypass) {
-                UserService
+                MemberService
                     .register(newUser)
                     .then(
                         function (response) {

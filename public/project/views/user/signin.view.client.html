@@ -6,7 +6,7 @@
         {{model.error}}</div>
 
     <h1>Login</h1>
-    <form novalidate name="loginForm">
+    <form novalidate name="signInForm">
         <input type="text"
                class="form-control"
                ng-model="username"
@@ -14,7 +14,7 @@
                placeholder="username"
                name="username"
                autocorrect="off" autocapitalize="none"/>
-        <div ng-show="loginForm.username.$invalid && loginForm.$submitted"
+        <div ng-show="signInForm.username.$invalid && signInForm.$submitted"
              class="message">
             Username is a required field.
         </div>
@@ -25,11 +25,11 @@
                placeholder="password"
                name="password"
                autocorrect="off" autocapitalize="none"/>
-        <div ng-show="loginForm.password.$invalid && loginForm.$submitted"
+        <div ng-show="signInForm.password.$invalid && signInForm.$submitted"
              class="message">
             Password is a required field.
         </div>
-        <button ng-click="loginForm.$valid && model.login(username, password)"
+        <button ng-click="signInForm.$valid && model.login(username, password)"
                 class="btn btn-primary btn-block"
                 type="submit">Login</button>
         <a class="btn btn-success btn-block"

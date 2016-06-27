@@ -1,9 +1,9 @@
 (function() {
     angular
         .module("Project")
-        .factory("UserService", UserService);
+        .factory("MemberService", MemberService);
 
-    function UserService($http) {
+    function MemberService($http) {
         var api = {
             createUser: createUser,
             login : login,
