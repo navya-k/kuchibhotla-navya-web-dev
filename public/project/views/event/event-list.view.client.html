@@ -19,10 +19,14 @@
                     ng-src="http://www.aviatorcameragear.com/wp-content/uploads/2012/07/placeholder-730x456.jpg">
         </div>
         <div class="col-md-5">
-            <h3><a href="#/group/{{event.group.urlname}}/event/{{event.id}}">{{event.name}}</a></h3>
+
+            <h3 ng-if="model.currentUser"><a href="#/group/{{event.group.urlname}}/event/{{event.id}}">{{event.name}}</a></h3>
+            <h3 ng-if="!model.currentUser"><a>{{event.name}}</a></h3>
             <h4><strong>Group: </strong>{{event.group.name}}</h4>
             <h4><strong>Location: </strong>{{event.venue.city}}, {{event.venue.localized_country_name}}.</h4>
-            <a ng-if="model.currentUser" target=_blank" class="btn btn-primary" href={{event.event_url}}>Add to Favourites</a>
+            <div ng-if="!model.currentUser">
+                <h4 class="message">* Sign in to view event details</h4>
+            </div>
             <!--<a target=_blank" class="btn btn-primary" href={{event.event_url}}>View Event on Meetup</a>-->
 
 

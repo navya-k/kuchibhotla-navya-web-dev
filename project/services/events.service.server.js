@@ -3,51 +3,19 @@
  */
 module.exports = function(app, models) {
 
-    var pageModel = models.pageModel;
-
-    app.get("/events/:searchTerm", createPage);
-
-    function createPage(req, res){
-        var searchTerm = req.params.searchTerm;
-        var urlBase = "http://api.meetup.com/2/open_events?and_text=False&offset=0&format=json&limited_events=False&text=TEXT&photo-host=public&page=2&radius=25.0&category=9%2C14%2C32%2C23&desc=False&status=upcoming&sig_id=127074982&sig=60616c2b6bd7ff42ba5024c3018fe217b241e58e";
-
-        var url = urlBase.replace("TEXT", "everest");
-
-        console.log(url);
-        res.send($http.get(url));
-        // $http({
-        //     method: 'JSONP',
-        //     url: url
-        // }).success(function(status) {
-        //     //your code when success
-        //     console.log("ok");
-        // }).error(function(status) {
-        //     //your code when fails
-        //     console.log("not ok "+status);
-        // });
-
-    }
-
-    function findAllPagesForWebsite(req, res) {
-        var webId = req.params.websiteId;
-        pageModel
-            .findAllPagesForWebsite(webId)
+    var memberModel = models.memberModel;
+    
+    app.get("/project/api/user/:userId/favourite/:eventId", findUserEventById);
+    app.post("/project/api/user/:userId/event",addEventToUser);
+    app.delete("/project/api/user/:userId/event/:eventId", removeEventFromUser);
+    
+    function findUserEventById (req, res) {
+        var userId = req.params.userId;
+        var eventId = req.params.eventId;
+        memberModel
+            .findEventForUser(userId, eventId)
             .then(
-                function(pages){
-                    res.json(pages);
-                },
-                function(err){
-                    res.statusCode(404).send(err);
-                }
-            );
-    }
-
-    function findPageById (req, res) {
-        var pageId = req.params.pageId;
-        pageModel
-            .findPageById(pageId)
-            .then(
-                function(page){
+                function(event){
                     res.json(page);
                 },
                 function(err){
@@ -56,14 +24,14 @@ module.exports = function(app, models) {
             );
     }
 
-    function updatePage(req, res) {
-        var pageId = req.params.pageId;
-        var newPage = req.body;
-        pageModel
-            .updatePage(pageId,newPage)
+    function addEventToUser (req, res) {
+        var userId = req.params.userId;
+        var event = req.body;
+        memberModel
+            .addEventToUser(userId, event)
             .then(
-                function(stats){
-                    res.sendStatus(200);
+                function(user){
+                    res.json(user);
                 },
                 function(err){
                     res.statusCode(404).send(err);
@@ -71,18 +39,19 @@ module.exports = function(app, models) {
             );
     }
 
-    function deletePage (req, res) {
-
-        var pageId = req.params.pageId;
-        pageModel
-            .deletePage(pageId)
+    function removeEventFromUser (req, res) {
+        var userId = req.params.userId;
+        var eventId = req.params.eventId;
+        memberModel
+            .removeEventFromUser(userId, eventId)
             .then(
                 function(stats){
-                    res.sendStatus(200);
+                    res.statusCode(200);
                 },
                 function(err){
                     res.statusCode(404).send(err);
                 }
             );
     }
+
 };

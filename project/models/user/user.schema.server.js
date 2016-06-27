@@ -22,7 +22,7 @@ module.exports = function() {
             id: String,
             displayName: String
         },
-        events    : [EventSchema],
+        events    : [],
         dateCreated : {type: Date, default : Date.now}
     }, {collection : "project.user"});
     

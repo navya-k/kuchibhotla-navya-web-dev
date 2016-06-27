@@ -55,10 +55,10 @@
             .when("/group/:groupUrl/event/:eventId", {
                 templateUrl: "views/event/event-detail.view.client.html",
                 controller: "EventDetailController",
-                controllerAs: "model"
-                // resolve: {
-                //     loggedIn : checkLoggedIn
-                // }
+                controllerAs: "model",
+                resolve: {
+                    loggedIn : checkLoggedIn
+                }
             })
 
             .otherwise ({

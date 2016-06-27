@@ -153,6 +153,7 @@ html, .container-fluid {
 
 .detailSpecialty {
     font-size: large;
+    white-space: nowrap;
 }
 
 .detailRateImg {
@@ -164,80 +165,13 @@ html, .container-fluid {
     padding-bottom: 30px;
 }
 
-.detailPageContent {
-
-}
-
-.detailEducation {
-    white-space: nowrap;
-}
-
-.detailProStatement {
-
-}
-
-.proStatement {
-    white-space: nowrap;
-}
-
-.detailSpecialty {
-    white-space: nowrap;
-}
-
-.detailLanguage {
-    white-space: nowrap;
-
-}
-
-.detailInsurance {
-    white-space: nowrap;
-}
-
-.patientReviewSection {
-    margin-bottom:50px;
-}
-
-.detailReviewStars {
-    white-space: nowrap;
-}
-
 .editReviewHeader {
     padding-top:30px;
     white-space: nowrap;
     /*border:1px solid #bbb;*/
 }
 
-.rateBtn {
-    margin-bottom: 5px;
-}
 
-
-
-
-.homeSlogan {
-    position: absolute;
-    top: 40%;
-    left:35%;
-    transform: translate(-50%,-50%);
-    white-space: nowrap;
-    font-size: 80px;
-    /*color: #549452;*/
-    color: #26AB37;
-    font-weight: bold;
-    font-family: Futura;
-}
-
-.homeSloganMobile {
-    position: relative;
-    top: 25%;
-    transform: translate(-50%,-50%);
-    white-space: nowrap;
-    font-size: 60px;
-    text-align: center;
-    color: #26AB37;
-    font-weight: bold;
-    font-family: Futura;
-}
 
 .searchGroup {
     position: relative;
@@ -281,9 +215,23 @@ html, .container-fluid {
     width : 500px;
 }
 
+.img-responsive.detail{
+    height : 300px;
+    width : 800px;
+}
+
 .hr {
     margin-top: 20px;
     margin-bottom: 20px;
     border: 0;
     border-top: 1px solid #eee;
+}
+
+.margin-button {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.event-detail {
+    color : #2e6da4;
 }

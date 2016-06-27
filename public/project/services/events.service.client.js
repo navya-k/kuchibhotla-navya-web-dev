@@ -14,8 +14,11 @@
 
     function EventService($http) {
         var api = {
-            searchEvents: searchEvents,
-            findEventById: findEventById
+            searchEvents         : searchEvents,
+            findEventById        : findEventById,
+            findUserEventById    : findUserEventById,
+            addEventToUser       : addEventToUser,
+            removeEventFromUser  : removeEventFromUser
         };
         return api;
 
@@ -32,6 +35,17 @@
             url = url.replace("API_KEY", key);
             console.log(url);
             return $http.jsonp(url);
+        }
+
+        function addEventToUser(userId, event) {
+            return $http.post("/project/api/user/"+userId+"/event",event);
+        }
+
+        function removeEventFromUser(userId, eventId) {
+            return $http.delete("/project/api/user/"+userId+"/event/"+eventId);
+        }
+        function findUserEventById(userId, eventId) {
+            return $http.get("/project/api/user/"+userId+"/favourite/"+eventId);
         }
     }
 })();
