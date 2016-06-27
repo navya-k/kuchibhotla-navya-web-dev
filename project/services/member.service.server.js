@@ -8,27 +8,25 @@ var bcryptProj = require("bcrypt-nodejs");
 
 module.exports = function(app, models) {
 
-    var userModel = models.userModel;
+    var memberModel = models.memberModel;
 
 
-    // app.get('/auth/google', passportProj.authenticate('google', { scope: ['profile'] }));
-    // app.get('/auth/google/callback', passportProj.authenticate('google', {
-    //     failureRedirect: '/login' }),
-    //     function(req, res) {
-    //         // Successful authentication, redirect home.
-    //         res.redirect('/project/#/login');
-    //     });
-    // app.get("/api/user", getUsers);
-    // app.post("/api/user", createUser);
-    // app.post("/api/logout", logout);
-    // app.get("/api/loggedIn", loggedIn);
-    app.post("/api/register", register);
-    // app.post("/api/login", passportProj.authenticate('proj'), login);
-    // app.get("/api/user?username=username", findUserByUsername);
-    // app.get("/api/user?username=username&password=password", findUserByCredentials);
-    // app.get("/api/user/:userId", findUserById);
-    // app.put("/api/user/:userId",  updateUser);
-    // app.delete("/api/user/:userId", deleteUser);
+    app.get('/auth/google', passportProj.authenticate('google', { scope: ['profile'] }));
+    app.get('/auth/google/callback', passportProj.authenticate('google', {
+        failureRedirect: '/project/#/',
+        successRedirect: '/project/#/user'}
+    ));
+    app.get("/project/api/user", getUsers);
+    app.post("/project/api/user", createUser);
+    app.post("/project/api/logout", logout);
+    app.get("/project/api/loggedIn", loggedIn);
+    app.post("/project/api/register", register);
+    app.post("project/api/login", passportProj.authenticate('proj'), login);
+    app.get("/project/api/user?username=username", findUserByUsername);
+    app.get("/project/api/user?username=username&password=password", findUserByCredentials);
+    app.get("/project/api/user/:userId", findUserById);
+    app.put("/project/api/user/:userId",  updateUser);
+    app.delete("/project/api/user/:userId", deleteUser);
 
     
     var googleConfig = {
@@ -39,12 +37,12 @@ module.exports = function(app, models) {
 
     passportProj.use('proj', new LocalStrat(localStrategy)); 
     passportProj.use('google', new GoogleStrategy(googleConfig, googleLogin));
-    passportProj.serializeUser(serializeUser);
-    passportProj.deserializeUser(deserializeUser);
+    passportProj.serializeUser(serializeProjectUser);
+    passportProj.deserializeUser(deserializeProjectUser);
 
 
     function localStrategy(username, password, done) {
-        userModel
+        memberModel
             .findUserByUsername(username)
             .then(
                 function(user) {
@@ -61,12 +59,12 @@ module.exports = function(app, models) {
             );
     }
 
-    function serializeUser(user, done) {
+    function serializeProjectUser(user, done) {
         done(null, user);
     }
 
-    function deserializeUser(user, done) {
-        userModel
+    function deserializeProjectUser(user, done) {
+        memberModel
             .findUserById(user._id)
             .then(
                 function(user){
@@ -89,7 +87,7 @@ module.exports = function(app, models) {
             findUserByUsername(username, res);
         }
         else {
-            userModel
+            memberModel
                 .getUsers()
                 .then(
                     function(users) {
@@ -106,7 +104,7 @@ module.exports = function(app, models) {
         var username = req.body.username;
         var password = req.body.password;
 
-        userModel
+        memberModel
             .findUserByUsername(username)
             .then(
                 function(user){
@@ -116,7 +114,7 @@ module.exports = function(app, models) {
                     }
                     else {
                         req.body.password = bcryptProj.hashSync(req.body.password);
-                        return userModel
+                        return memberModel
                             .createUser(req.body);
                     }
                 },
@@ -146,7 +144,7 @@ module.exports = function(app, models) {
 
     function createUser(req, res) {
         var user = req.body;
-        userModel
+        memberModel
             .createUser(user)
             .then(
                 function(user) {
@@ -160,7 +158,7 @@ module.exports = function(app, models) {
 
     function findUserByUsername (username, res) {
 
-        userModel
+        memberModel
             .findUserByUsername(username)
             .then(
                 function(user){
@@ -195,7 +193,7 @@ module.exports = function(app, models) {
 
     function findUserByCredentials(username, password, req, res) {
 
-        userModel
+        memberModel
             .findUserByCredentials(username, password)
             .then(
                 function(user){
@@ -212,7 +210,7 @@ module.exports = function(app, models) {
 
     function findUserById (req, res) {
         var id = req.params.userId;
-        userModel
+        memberModel
             .findUserById(id)
             .then(
                 function(user){
@@ -227,7 +225,7 @@ module.exports = function(app, models) {
     function updateUser(req, res) {
         var id = req.params.userId;
         var newUser = req.body;
-        userModel
+        memberModel
             .updateUser(id,newUser)
             .then(
                 function(stats){
@@ -243,7 +241,7 @@ module.exports = function(app, models) {
 
         var id = req.params.userId;
 
-        userModel
+        memberModel
             .deleteUser(id)
             .then(
                 function (stats) {
@@ -256,61 +254,26 @@ module.exports = function(app, models) {
             );
     }
 
-    // Facebook Login
-    function facebookLogin(token, refreshToken, profile, done) {
-        userModel
-            .findFacebookUser(profile.id)
-            .then(
-                function(facebookUser) {
-                    if(facebookUser) {
-                        return done(null, facebookUser);
-                    } else {
-                        facebookUser = {
-                            username: profile.displayName.replace(/ /g,''),
-                            facebook: {
-                                token: token,
-                                id: profile.id,
-                                displayName: profile.displayName
-                            }
-                        };
-                        userModel
-                            .createUser(facebookUser)
-                            .then(
-                                function(user) {
-                                    done(null, user);
-                                },
-                                function(err){
-                                    done(null, err);
-                                }
-                            );
-                    }
-                },
-                function(err){
-                    done(null, err);
-                }
-            );
-    }
-
     //google Login
     function googleLogin(accessToken, refreshToken, profile, cb) {
         console.log(profile);
-        userModel
-            .findFacebookUser(profile.id)
+        memberModel
+            .findGoogleUser(profile.id)
             .then(
-                function(facebookUser) {
-                    if(facebookUser) {
-                        return cb(null, facebookUser);
+                function(GoogleUser) {
+                    if(GoogleUser) {
+                        return cb(null, GoogleUser);
                     } else {
-                        facebookUser = {
+                        GoogleUser = {
                             username: profile.displayName.replace(/ /g,''),
-                            facebook: {
+                            google: {
                                 token: accessToken,
                                 id: profile.id,
                                 displayName: profile.displayName
                             }
                         };
-                        userModel
-                            .createUser(facebookUser)
+                        memberModel
+                            .createUser(GoogleUser)
                             .then(
                                 function(user) {
                                     cb(null, user);

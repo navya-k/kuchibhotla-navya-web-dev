@@ -55,3 +55,8 @@ p.navbar-text.pull-left {
 form.ng-submitted .ng-invalid {
     border: 1px solid red;
 }
+
+
+.justified-text {
+    text-align: justify;
+}

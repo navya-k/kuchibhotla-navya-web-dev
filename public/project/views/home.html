@@ -32,17 +32,22 @@
 
 <!-- Page Content -->
 <div class="container">
-
-
-    <div class="input-group home-form">
-        <input ng-model="searchText" type="text" class="form-control">
-    <span class="input-group-btn">
-        <!--<a ng-click="model.searchEvents(searchText)" class="btn btn-default" type="button">-->
-        <a href="#/events/{{searchText}}" class="btn btn-default" type="button">
-            <span class="glyphicon glyphicon-search"></span>
-        </a>
-    </span>
+    <form name="searchForm">
+<div class="col-md-12 well-wrapper">
+    <div class="well">
+        <h4>Let The Thrill Begin</h4>
+        <div class="input-group">
+            <input ng-model="searchText" type="text" class="form-control"
+                   place-holder="Enter a search text" required>
+                        <span class="input-group-btn">
+                            <button ng-click="searchForm.$valid && model.eventSearch(searchText)"
+                                    type="submit"
+                                    class="btn btn-success"><i class="fa fa-search"></i></button>
+                        </span>
+        </div>
     </div>
+</div>
+        </form>
 
     <!-- Footer -->
     <footer>

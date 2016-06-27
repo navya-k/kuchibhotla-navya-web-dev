@@ -1,47 +1,32 @@
-<div class="container-fluid clearfix">
-        <h3>Showing Results for "{{model.searchText}}"</h3>
+<div class="container">
+    <div class="row"><div class="col-lg-12">
+        <h1 class="page-header">Showing Results for
+            <small>"{{model.searchText}}"</small>
+        </h1>
+
+    </div></div>
         <!--search result-->
-        <!-- ngRepeat: doctor in model.doctors -->
-        <div class="row col-md-7 col-lg-7 col-sm-10 col-md-offset-1 col-lg-offset-1 resultRow text-nowrap" ng-repeat="event in model.events">
+    <div class="row" ng-repeat="event in model.events">
+        <div class="row">
+        <div class="col-md-7">
+            <img ng-if="event.group.group_photo.photo_link"
+                 class="img-responsive"
+                 ng-src="{{event.group.group_photo.photo_link}}">
+                 <!--col-xs-2 col-sm-2 col-md-2 col-lg-2 eventResultImage" -->
 
-                 <img ng-if="event.group.group_photo.photo_link" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 eventResultImage" ng-src="{{event.group.group_photo.photo_link}}">
-
-
-                <img  class="col-xs-2 col-sm-2 col-md-2 col-lg-2 eventResultImage" ng-if="!event.group.group_photo.photo_link" ng-src="https://asset1.betterdoctor.com/assets/general_doctor_female.png">
-
-
-
-
-            <div class="col-xs-2 col-sm-4 col-md-4 col-lg-4 resultInfo ">
-                <div class="resultName"><a href="#/detail/{{event.id}}"  >{{event.name}}</a></div>
-                <div class="resultSpecialty">{{event.group.name}}</div>
-                <div><img></div>
-                <a href="{{event.event_url}}" target="_blank" class="resultPhone">{{event.event_url}}</a>
-        </div><!-- end ngRepeat: doctor in model.doctors -->
-
-        <!--<div class="row col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">-->
-            <!--<hr>-->
-        <!--</div>-->
-
-
+            <img
+                    ng-if="!event.group.group_photo.photo_link"
+                    class="img-responsive"
+                    ng-src="http://www.aviatorcameragear.com/wp-content/uploads/2012/07/placeholder-730x456.jpg">
+        </div>
+        <div class="col-md-5">
+            <h3><a href="#/detail/{{event.id}}">{{event.name}}</a></h3>
+            <h4>{{event.group.name}}</h4>
+            <p><strong>VENUE :</strong> {{event.venue.city}}, {{event.venue.localized_country_name}}</p>
+            <a ng-if="$scope.currentUser" target=_blank" class="btn btn-primary" href={{event.event_url}}>Add My Favourites</a>
+            <a target=_blank" class="btn btn-primary" href={{event.event_url}}>View Event on Meetup</a>
+        </div>
     </div>
+    <hr>
     </div>
-<!--</div>-->
-
-<!--<nav class="navbar navbar-default navbar-fixed-bottom">-->
-    <!--<div class="container">-->
-        <!--<div class="row navbar-text">-->
-            <!--<div class="col-xs-3 text-center">-->
-            <!--</div>-->
-            <!--<div class="col-xs-3 text-center">-->
-            <!--</div>-->
-            <!--<div class="col-xs-3 text-center">-->
-            <!--</div>-->
-            <!--<div class="col-xs-3 text-center">-->
-                <!--<a href="#/user/{{model.userId}}">-->
-                    <!--<span class="glyphicon glyphicon-user"></span>-->
-                <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</nav>-->
+</div>

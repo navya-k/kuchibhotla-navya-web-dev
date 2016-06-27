@@ -15,7 +15,7 @@ module.exports = function() {
         dob         : Date,
         email       : String,
         phone       : String,
-        facebook    : {
+        google    : {
             token: String,
             id: String,
             displayName: String

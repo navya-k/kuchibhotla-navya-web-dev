@@ -22,19 +22,6 @@
             url = url.replace("API_KEY", key);
             console.log(url);
             return $http.jsonp(url);
-            // return $http.get("/events/"+searchTerm);
-            //  $http({
-            //     method: 'JSONP',
-            //     url: url
-            // }).success(function(status) {
-            //     //your code when success
-            //     console.log("ok"+status);
-            //      return status ;
-            // }).error(function(status) {
-            //     //your code when fails
-            //     console.log("not ok "+status);
-            //      return status;
-            // });
         }
     }
 })();

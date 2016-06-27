@@ -6,11 +6,11 @@ module.exports = function(){
     
     var mongoose = require("mongoose");
     var UserSchema = require("./user.schema.server")();
-    var User = mongoose.model("Member", UserSchema);
+    var Member = mongoose.model("Member", UserSchema);
     
     var api = {
 
-        findFacebookUser        : findFacebookUser,
+        findGoogleUser          : findGoogleUser,
         createUser              : createUser,
         findUserById            : findUserById,
         findUserByCredentials   : findUserByCredentials,
@@ -23,24 +23,24 @@ module.exports = function(){
     return api;
     
     function createUser(user){
-        return User.create(user);
+        return Member.create(user);
     }
 
     function findUserById(userId){
-        return User.findById(userId);
+        return Member.findById(userId);
     }
 
-    function findFacebookUser(id) {
-        return User.findOne({"facebook.id": id});
+    function findGoogleUser(id) {
+        return Member.findOne({"google.id": id});
     }
 
 
     function findUserByCredentials(username, password){
-        return User.findOne({username : username, password : password });
+        return Member.findOne({username : username, password : password });
     }
 
     function findUserByUsername(username, password){
-        return User.findOne({username : username});
+        return Member.findOne({username : username});
     }
 
     function updateUser(id,user){
@@ -55,10 +55,10 @@ module.exports = function(){
     }
 
     function deleteUser(userId){
-        return User.remove({_id : userId});
+        return Member.remove({_id : userId});
     }
 
     function getUsers(){
-        return User.find();
+        return Member.find();
     }
 };
