@@ -9,6 +9,7 @@
         vm.updateUser = updateUser;
         vm.unregister = unregister;
         vm.logout = logout;
+        vm.searchForEvent = searchForEvent;
 
         var id = $rootScope.currentUser._id;
 
@@ -60,6 +61,10 @@
                         vm.error = "Unable to remove user."
                     }
                 );
+        }
+
+        function searchForEvent(searchText) {
+            $location.url("/user/"+id+"/events/"+searchText);
         }
     }
 })();

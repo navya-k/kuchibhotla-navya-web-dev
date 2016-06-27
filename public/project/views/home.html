@@ -32,13 +32,19 @@
 
 <!-- Page Content -->
 <div class="container ">
+    <div class="col-md-12 well-wrapper">
+    <p class="lead">Consider yourself an adventure junkie?
+        Thrill camp let's you hunt and explore events to satisfy your thrill senses.
+        Sign up and you can manage your favourite events.
+        You can also perform advanced searches to look for events of your interest. </p>
+
     <form name="searchForm">
-<div class="col-md-12 well-wrapper">
+
     <div class="well">
         <h4>Let The Thrill Begin</h4>
         <div class="input-group">
             <input ng-model="searchText" type="text" class="form-control"
-                   place-holder="Enter a search text" required>
+                   placeholder="Enter a search text" required>
                         <span class="input-group-btn">
                             <button ng-click="searchForm.$valid && model.eventSearch(searchText)"
                                     type="submit"
@@ -46,9 +52,9 @@
                         </span>
         </div>
     </div>
-</div>
-        </form>
 
+        </form>
+    </div>
     <!-- Footer -->
     <footer>
         <div class="row">

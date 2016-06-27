@@ -3,7 +3,6 @@
         <h1 class="page-header">Showing Results for
             <small>"{{model.searchText}}"</small>
         </h1>
-
     </div></div>
         <!--search result-->
     <div class="row" ng-repeat="event in model.events">
@@ -20,11 +19,13 @@
                     ng-src="http://www.aviatorcameragear.com/wp-content/uploads/2012/07/placeholder-730x456.jpg">
         </div>
         <div class="col-md-5">
-            <h3><a href="#/detail/{{event.id}}">{{event.name}}</a></h3>
-            <h4>{{event.group.name}}</h4>
-            <p><strong>VENUE :</strong> {{event.venue.city}}, {{event.venue.localized_country_name}}</p>
-            <a ng-if="$scope.currentUser" target=_blank" class="btn btn-primary" href={{event.event_url}}>Add My Favourites</a>
-            <a target=_blank" class="btn btn-primary" href={{event.event_url}}>View Event on Meetup</a>
+            <h3><a href="#/group/{{event.group.urlname}}/event/{{event.id}}">{{event.name}}</a></h3>
+            <h4><strong>Group: </strong>{{event.group.name}}</h4>
+            <h4><strong>Location: </strong>{{event.venue.city}}, {{event.venue.localized_country_name}}.</h4>
+            <a ng-if="model.currentUser" target=_blank" class="btn btn-primary" href={{event.event_url}}>Add to Favourites</a>
+            <!--<a target=_blank" class="btn btn-primary" href={{event.event_url}}>View Event on Meetup</a>-->
+
+
         </div>
     </div>
     <hr>
