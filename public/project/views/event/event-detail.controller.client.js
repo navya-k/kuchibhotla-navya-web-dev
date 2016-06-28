@@ -11,30 +11,22 @@
         vm.getDescription = getDescription;
 
         vm.addToFavourites = addToFavourites;
-        vm.removeFromFavourites = removeFromFavourites;
+        // vm.removeFromFavourites = removeFromFavourites;
 
         function init() {
             EventService
                 .findEventById(vm.groupUrl, vm.eventId)
                 .then(
-                    function(response){
+                    function (response) {
+                        vm.isFavourite = false;
                         vm.event = response.data.data;
-                        EventService
-                            .findUserEventById(vm.eventId)
-                            .then(
-                                function(event){
-                                    vm.event = event;
-                                     vm.isFavourite = true;
-                                },
-                                function(err){
-                                    vm.isFavourite = false;
-                                    console.log(err); 
-                                }
-                            )
                     },
-                    function(err){
+                    function (err) {
+                        vm.isFavourite = false;
+
                         console.log(err);
-                    });
+                    }
+                );
         }
         init();
         
@@ -45,32 +37,16 @@
                     function(user){
 
                         vm.isFavourite = true;
-                      init();
-                    },
-                    function(err){
-                        vm.isFavourite = false;
-                        console.log(err);
-                        init();
-                    }
-                )
-        }
 
-        function removeFromFavourites(eventId){
-            EventService
-                .removeEventFromUser(vm.currentUser._id, eventId)
-                .then(
-                    function(stats){
-                         
-                        vm.isFavourite = false;
-                        $location.reload();
+                        $location.url("/user/"+vm.currentUser._id+"/favourite/"+event.id);
                     },
                     function(err){
-                        
+                        vm.isFavourite = false;
                         console.log(err);
-                        $location.reload();
+
                     }
                 )
-        }
+        } 
 
         function getDescription() {
             return $sce.trustAsHtml(vm.event.description);

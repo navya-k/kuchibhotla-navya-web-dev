@@ -4,19 +4,43 @@
 module.exports = function(app, models) {
 
     var memberModel = models.memberModel;
-    
+
+    app.get("/project/api/user/:userId/events", findAllEventsForUser);
     app.get("/project/api/user/:userId/favourite/:eventId", findUserEventById);
     app.post("/project/api/user/:userId/event",addEventToUser);
-    app.delete("/project/api/user/:userId/event/:eventId", removeEventFromUser);
-    
+    app.get("/project/api/user/:userId/event/:eventId", removeEventFromUser);
+
+    function findAllEventsForUser (req, res) {
+        var userId = req.params.userId;
+        
+        memberModel
+            .findAllEventsForUser(userId)
+            .then(
+                function(events){
+                    res.json(events);
+                },
+                function(err){
+                    res.statusCode(404).send(err);
+                }
+            );
+    }
+
+
     function findUserEventById (req, res) {
         var userId = req.params.userId;
         var eventId = req.params.eventId;
         memberModel
-            .findEventForUser(userId, eventId)
+            .findUserById(userId)
             .then(
-                function(event){
-                    res.json(page);
+                function(user){
+                    for(var event in user.events) {
+                        if(user.events[event].id === eventId){
+                            res.json(user.events[event]);
+                            return;
+                        }
+                    }
+                    res.statusCode(404).send(err);
+
                 },
                 function(err){
                     res.statusCode(404).send(err);
@@ -31,7 +55,7 @@ module.exports = function(app, models) {
             .addEventToUser(userId, event)
             .then(
                 function(user){
-                    res.json(user);
+                    res.json(200);
                 },
                 function(err){
                     res.statusCode(404).send(err);
@@ -45,8 +69,8 @@ module.exports = function(app, models) {
         memberModel
             .removeEventFromUser(userId, eventId)
             .then(
-                function(stats){
-                    res.statusCode(200);
+                function(user){
+                    res.send(200);
                 },
                 function(err){
                     res.statusCode(404).send(err);

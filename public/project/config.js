@@ -35,6 +35,15 @@
                 controllerAs: "model"
             })
 
+            .when("/user/:userId/events", {
+                templateUrl: "views/event/event-list.view.client.html",
+                controller: "FavouriteEventsController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn : checkLoggedIn
+                }
+            })
+            
             .when("/user/:userId/events/:searchTerm", {
                 templateUrl: "views/event/event-list.view.client.html",
                 controller: "EventSearchController",
@@ -52,6 +61,16 @@
                     loggedIn : checkLoggedIn
                 }
             })
+
+            .when("/user/:userId/favourite/:eventId", {
+                templateUrl: "views/event/event-detail.view.client.html",
+                controller: "FavouriteDetailController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn : checkLoggedIn
+                }
+            })
+ 
             .when("/group/:groupUrl/event/:eventId", {
                 templateUrl: "views/event/event-detail.view.client.html",
                 controller: "EventDetailController",

@@ -18,9 +18,10 @@ module.exports = function(){
         updateUser              : updateUser,
         deleteUser              : deleteUser,
         getUsers                : getUsers,
+        findAllEventsForUser    : findAllEventsForUser,
         findEventForUser        : findEventForUser,
-        addEventToUser: addEventToUser,
-        removeEventFromUser: removeEventFromUser
+        addEventToUser          : addEventToUser,
+        removeEventFromUser     : removeEventFromUser
     };
 
     return api;
@@ -47,30 +48,38 @@ module.exports = function(){
         return Member.findOne({username : username});
     }
 
-    function findEventForUser(userId, eventId){
-        return Member.findOne({_id : userId, 'events.eventId': eventId});
+    function findAllEventsForUser(userId){
+        return Member.findById(userId).select('events');
     }
 
+    function findEventForUser(userId, eventId){
+        return Member.findById(userId,
+            function(err, user) {
+                user.events.id(eventId);
+            });
+    }
+
+
     function addEventToUser(userId, event){
-        // TODO - if event exists
-         return Member.findById(userId ,
+        return Member.findById(userId ,
             function (err, user) {
                 if (!err) {
                     user.events.push(event);
                     user.save();
-                } 
+                }
             }
-         );
+        );
     }
 
     function removeEventFromUser(userId, eventId){
         return Member.findById(userId,
             function (err, user) {
-                if (!err) {
-                    user.events.id(eventId).remove();
-                    user.save();
-                }
-            });
+                for(var event in user.events){
+                    if(user.events[event].id === eventId) {
+                        user.events.splice(event, 1);
+                        user.save();
+                    }
+                }});
     }
 
 
@@ -78,7 +87,7 @@ module.exports = function(){
 
     function updateUser(id,user){
         delete user._id;
-        return User
+        return Member
             .update({_id : id},{
                 $set : {
                     firstName   : user.firstName,

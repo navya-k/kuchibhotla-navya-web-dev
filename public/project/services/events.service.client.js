@@ -18,7 +18,8 @@
             findEventById        : findEventById,
             findUserEventById    : findUserEventById,
             addEventToUser       : addEventToUser,
-            removeEventFromUser  : removeEventFromUser
+            removeEventFromUser  : removeEventFromUser,
+            findEventsForUser    : findEventsForUser
         };
         return api;
 
@@ -42,10 +43,14 @@
         }
 
         function removeEventFromUser(userId, eventId) {
-            return $http.delete("/project/api/user/"+userId+"/event/"+eventId);
+            return $http.get("/project/api/user/"+userId+"/event/"+eventId);
         }
         function findUserEventById(userId, eventId) {
             return $http.get("/project/api/user/"+userId+"/favourite/"+eventId);
+        }
+
+        function findEventsForUser(userId) {
+            return $http.get("/project/api/user/"+userId+"/events");
         }
     }
 })();

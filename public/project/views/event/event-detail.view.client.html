@@ -35,10 +35,11 @@
 
             <a ng-if="!model.isFavourite" class="btn btn-primary margin-button" ng-click="model.addToFavourites(model.event)">
                 Add to Favourites</a>
-            <a ng-if="model.isFavourite" class="btn btn-primary margin-button" ng-click="model.removeFromFavourites(model.event.id)">
+            <a ng-if="model.isFavourite" class="btn btn-primary margin-button"
+               ng-click="model.removeFromFavourites(model.event.id)">
                 Remove from Favourites</a>
 
-            <a target=_blank" class="btn btn-danger" href={{model.event.link}}>View Event on Meetup</a></div>
+            <a target=_blank" class="btn btn-danger margin-button" href={{model.event.link}}>View Event on Meetup</a></div>
     </div>
     <div class="row">
         <div class="col-md-9">

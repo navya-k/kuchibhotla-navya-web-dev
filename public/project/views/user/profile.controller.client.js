@@ -10,6 +10,7 @@
         vm.unregister = unregister;
         vm.logout = logout;
         vm.searchForEvent = searchForEvent;
+        
 
         var id = $rootScope.currentUser._id;
 
@@ -66,5 +67,7 @@
         function searchForEvent(searchText) {
             $location.url("/user/"+id+"/events/"+searchText);
         }
+
+        
     }
 })();
