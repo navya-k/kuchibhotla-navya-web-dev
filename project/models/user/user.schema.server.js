@@ -6,7 +6,7 @@ module.exports = function() {
     
     var mongoose = require("mongoose");
 
-    var EventSchema = require("../event/event.schema.server")();
+     
     var UserSchema = mongoose.Schema ({
         
         username    : {type: String, required: true},
@@ -22,7 +22,7 @@ module.exports = function() {
             id: String,
             displayName: String
         },
-        events    : [],
+        events    : [{type: mongoose.Schema.Types.ObjectId, ref: "Event"}],
         dateCreated : {type: Date, default : Date.now}
     }, {collection : "project.user"});
     

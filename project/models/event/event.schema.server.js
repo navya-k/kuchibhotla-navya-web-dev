@@ -5,24 +5,14 @@
 module.exports = function() {
     
     var mongoose = require("mongoose");
-    
+    var CommentSchema = require("../comment/comment.schema.server")();
     var EventSchema = mongoose.Schema ({
         
-        username    : {type: String, required: true},
-        password    : String,
-        firstName   : String,
-        lastName    : String,
-        dob         : Date,
-        email       : String,
-        phone       : String,
-        userType    : {type: String, enum : ['user','admin']},
-        google    : {
-            token: String,
-            id: String,
-            displayName: String
-        },
+        user : {type: mongoose.Schema.Types.ObjectId, ref: "Member"},
+        eventObject    : Object,
+        comments    : [{type: mongoose.Schema.Types.ObjectId, ref: "Comment"}],
         dateCreated : {type: Date, default : Date.now}
-    });
+    },{collection : "project.event"});
     
     return EventSchema;
 };

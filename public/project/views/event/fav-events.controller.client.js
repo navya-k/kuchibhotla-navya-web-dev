@@ -13,8 +13,15 @@
             EventService
                 .findEventsForUser(vm.userId)
                 .then(function(response){
-                    console.log(response.data.events);
-                    vm.events = response.data.events;
+                    console.log("event in fa "+response.data);
+                    var results = [];
+                    for(var event in response.data){
+                        var currentEvent = response.data[event].eventObject;
+                        currentEvent.dbId = response.data[event]._id;
+                        results.push(currentEvent);
+                    }
+                        
+                    vm.events = results;
                     },
                     function(err){
                         console.log(err);

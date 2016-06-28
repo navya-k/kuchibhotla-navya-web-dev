@@ -8,12 +8,10 @@
 
         vm.searchText = $routeParams.searchTerm;
         vm.currentUser = $rootScope.currentUser;
-        function init() {
-            console.log(vm.searchText);
+        function init() { 
             EventService
                 .searchEvents(vm.searchText)
-                .then(function(response){
-                    console.log(response.data.results);
+                .then(function(response){ 
                     vm.events = response.data.results; ;
                     },
                     function(err){

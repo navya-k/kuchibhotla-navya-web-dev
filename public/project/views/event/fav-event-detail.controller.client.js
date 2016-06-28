@@ -8,18 +8,17 @@
         vm.groupUrl = $routeParams.groupUrl;
         vm.eventId = $routeParams.eventId;
         vm.currentUser = $rootScope.currentUser;
-        vm.getDescription = getDescription;
 
-        // vm.addToFavourites = addToFavourites;
+        // functions
+        vm.getDescription = getDescription;
         vm.removeFromFavourites = removeFromFavourites;
 
         function init() {
             EventService
-                .findUserEventById(vm.currentUser._id, vm.eventId)
+                .findFavEventById(vm.currentUser._id, vm.eventId)
                 .then(
-                    function(response){
-                        console.log(response.data);
-                        vm.event = response.data;
+                    function(response){ 
+                        vm.event = response.data.eventObject;
                         vm.isFavourite = true;
                     },
                     function(err){
@@ -29,25 +28,10 @@
                 
         }
         init();
-
-        // function addToFavourites(event){
-        //     EventService
-        //         .addEventToUser(vm.currentUser._id, event)
-        //         .then(
-        //             function(user){
-        //
-        //                 vm.isFavourite = true;
-        //                 init();
-        //             },
-        //             function(err){
-        //                 vm.isFavourite = false;
-        //                 console.log(err);
-        //                 init();
-        //             }
-        //         )
-        // }
+ 
 
         function removeFromFavourites(eventId){
+            // TODO FIX
             EventService
                 .removeEventFromUser(vm.currentUser._id, eventId)
                 .then(

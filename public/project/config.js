@@ -70,8 +70,9 @@
                     loggedIn : checkLoggedIn
                 }
             })
+            
  
-            .when("/group/:groupUrl/event/:eventId", {
+            .when("/group/:groupUrl/event/:meetupId", {
                 templateUrl: "views/event/event-detail.view.client.html",
                 controller: "EventDetailController",
                 controllerAs: "model",
@@ -79,6 +80,17 @@
                     loggedIn : checkLoggedIn
                 }
             })
+
+            .when("/user/:userId/event/:eventId/comment/new", {
+                templateUrl: "views/comment/new-comment.view.client.html",
+                controller: "NewCommentController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn : checkLoggedIn
+                }
+            })
+
+        
 
             .otherwise ({
                 redirectTo : "/"

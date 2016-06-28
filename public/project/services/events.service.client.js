@@ -16,28 +16,27 @@
         var api = {
             searchEvents         : searchEvents,
             findEventById        : findEventById,
-            findUserEventById    : findUserEventById,
+            findFavEventById    : findFavEventById,
+            findMeetupEventForUser    : findMeetupEventForUser,
             addEventToUser       : addEventToUser,
             removeEventFromUser  : removeEventFromUser,
-            findEventsForUser    : findEventsForUser
+            findEventsForUser    : findEventsForUser            
         };
         return api;
 
         function searchEvents(searchTerm) {
             var url = urlBase.replace("TEXT", searchTerm);
-            url = url.replace("API_KEY", key);
-            console.log(url);
+            url = url.replace("API_KEY", key); 
             return $http.jsonp(url);
         }
 
         function findEventById(groupUrl, eventId) {
             var url = eventUrl.replace("GROUP_URL", groupUrl);
             url = url.replace("EVENT_ID", eventId);
-            url = url.replace("API_KEY", key);
-            console.log(url);
+            url = url.replace("API_KEY", key); 
             return $http.jsonp(url);
         }
-
+         
         function addEventToUser(userId, event) {
             return $http.post("/project/api/user/"+userId+"/event",event);
         }
@@ -45,10 +44,13 @@
         function removeEventFromUser(userId, eventId) {
             return $http.get("/project/api/user/"+userId+"/event/"+eventId);
         }
-        function findUserEventById(userId, eventId) {
+        function findFavEventById(userId, eventId) {
             return $http.get("/project/api/user/"+userId+"/favourite/"+eventId);
         }
 
+        function findMeetupEventForUser(userId, meetupId) {
+            return $http.get("/project/api/user/"+userId+"/meetup/"+meetupId);
+        }
         function findEventsForUser(userId) {
             return $http.get("/project/api/user/"+userId+"/events");
         }

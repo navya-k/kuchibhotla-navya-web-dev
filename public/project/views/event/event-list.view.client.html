@@ -28,7 +28,7 @@
                 <h3 ng-if="model.currentUser && model.searchText">
                     <a href="#/group/{{event.group.urlname}}/event/{{event.id}}">{{event.name}}</a></h3>
                 <h3 ng-if="model.currentUser && !model.searchText">
-                    <a href="#/user/{{model.currentUser._id}}/favourite/{{event.id}}">{{event.name}}</a></h3>
+                    <a href="#/user/{{model.currentUser._id}}/favourite/{{event.dbId}}">{{event.name}}</a></h3>
                 <h3 ng-if="!model.currentUser"><a>{{event.name}}</a></h3>
                 <h4><strong>Group: </strong>{{event.group.name}}</h4>
                 <h4><strong>Location: </strong>{{event.venue.city}}, {{event.venue.localized_country_name}}.</h4>
@@ -42,4 +42,5 @@
         </div>
         <hr>
     </div>
+    <div ng-if="!model.events || !model.events.length">No Favourites to show</div>
 </div>

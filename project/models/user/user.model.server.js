@@ -60,11 +60,11 @@ module.exports = function(){
     }
 
 
-    function addEventToUser(userId, event){
+    function addEventToUser(userId, eventId){
         return Member.findById(userId ,
             function (err, user) {
                 if (!err) {
-                    user.events.push(event);
+                    user.events.push(eventId);
                     user.save();
                 }
             }
@@ -74,17 +74,17 @@ module.exports = function(){
     function removeEventFromUser(userId, eventId){
         return Member.findById(userId,
             function (err, user) {
+                console.log(user);
+                if(!err) {
                 for(var event in user.events){
-                    if(user.events[event].id === eventId) {
+                    if(user.events[event] == eventId) {
                         user.events.splice(event, 1);
                         user.save();
                     }
-                }});
+                }
+            }});
     }
-
-
-
-
+    
     function updateUser(id,user){
         delete user._id;
         return Member
