@@ -20,8 +20,9 @@ module.exports = function(){
         getUsers                : getUsers,
         findAllEventsForUser    : findAllEventsForUser,
         findEventForUser        : findEventForUser,
-        addEventToUser          : addEventToUser,
-        removeEventFromUser     : removeEventFromUser
+
+        removeEventFromUser     : removeEventFromUser,
+        addEventReferenceToUser : addEventReferenceToUser
     };
 
     return api;
@@ -60,7 +61,7 @@ module.exports = function(){
     }
 
 
-    function addEventToUser(userId, eventId){
+    function addEventReferenceToUser(userId, eventId){
         return Member.findById(userId ,
             function (err, user) {
                 if (!err) {
@@ -71,10 +72,12 @@ module.exports = function(){
         );
     }
 
+
+
     function removeEventFromUser(userId, eventId){
         return Member.findById(userId,
             function (err, user) {
-                console.log(user);
+                console.log("user Model remove"+user);
                 if(!err) {
                 for(var event in user.events){
                     if(user.events[event] == eventId) {

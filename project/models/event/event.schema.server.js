@@ -8,9 +8,9 @@ module.exports = function() {
     var CommentSchema = require("../comment/comment.schema.server")();
     var EventSchema = mongoose.Schema ({
         
-        user : {type: mongoose.Schema.Types.ObjectId, ref: "Member"},
+        users : [{type: mongoose.Schema.Types.ObjectId, ref: "Member"}],
         eventObject    : Object,
-        comments    : [{type: mongoose.Schema.Types.ObjectId, ref: "Co"}],
+        comments    : [{type: mongoose.Schema.Types.ObjectId, ref: "Comment"}],
         dateCreated : {type: Date, default : Date.now}
     },{collection : "project.event"});
     

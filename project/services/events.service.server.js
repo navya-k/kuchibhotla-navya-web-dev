@@ -8,23 +8,26 @@ module.exports = function(app, models) {
 
     app.get("/project/api/user/:userId/events", findAllEventsForUser);
     app.get("/project/api/user/:userId/favourite/:eventId", findUserEventById);
-    app.post("/project/api/user/:userId/event",addEventToUser);
+    app.post("/project/api/user/:userId/event",createEventForUser);
     app.get("/project/api/user/:userId/event/:eventId", removeEventFromUser);
-    app.get("/project/api/user/:userId/meetup/:meetupId", findEventByMeetupId);
-    
+    app.get("/project/api/user/:userId/meetup/:meetupId", findEventByMeetupIdForUser);
+    app.get("/project/api/meetupevent/:meetupId",findEventByMeetupId );
+    app.get("/project/api/user/:userId/event/:eventId/update", updateEventAndUSerReferences);
+    app.delete("/project/api/event/:eventId", deleteEvent);
+
     function findAllEventsForUser (req, res) {
         var userId = req.params.userId;
-
         eventModel
             .findAllEventsWithUser(userId)
-            .then(
-                function(events){
-                    res.json(events);
+            .then(function(events){
+                    res.send(events);
+                    console.log("foundd yaaa");
                 },
                 function(err){
                     res.statusCode(404).send(err);
                 }
             );
+
     }
 
 
@@ -34,7 +37,7 @@ module.exports = function(app, models) {
         eventModel
             .findEventById(eventId)
             .then(
-                function(event){ 
+                function(event){
                     res.json(event);
                 },
                 function(err){
@@ -43,21 +46,18 @@ module.exports = function(app, models) {
                 });
     }
 
-    function addEventToUser (req, res) {
+    function createEventForUser (req, res) {
         var userId = req.params.userId;
         var event = req.body;
         eventModel
             .createEvent(userId, event)
             .then(
-                function (eventCreated) { 
+                function (eventCreated) {
                     memberModel
-                        .addEventToUser(userId, eventCreated._id)
+                        .addEventReferenceToUser(userId, eventCreated._id)
                         .then(
-                            function (user) { 
+                            function(user){
                                 res.json(eventCreated);
-                            },
-                            function (err) {
-                                res.statusCode(400).send(err);
                             });
                 },
                 function (err) {
@@ -69,15 +69,14 @@ module.exports = function(app, models) {
     function removeEventFromUser (req, res) {
         var userId = req.params.userId;
         var eventId = req.params.eventId;
-
-        eventModel
-            .removeEvent(userId, eventId)
-            .then(function (eventRemoved) {
-                    memberModel
-                        .removeEventFromUser(userId, eventId)
-                        .then(
-                            function(user){
-                                res.json(200);
+        memberModel
+            .removeEventFromUser(userId, eventId)
+            .then(
+                function(user){
+                    eventModel
+                        .removeUserFromEvent(userId, eventId)
+                        .then(function (eventRemoved) {
+                                res.json(eventRemoved);
                             },
                             function (err) {
                                 res.statusCode(400).send(err);
@@ -89,17 +88,62 @@ module.exports = function(app, models) {
                 });
     }
 
-    function findEventByMeetupId (req, res) {
+    function findEventByMeetupIdForUser (req, res) {
         var userId = req.params.userId;
         var meetupId = req.params.meetupId;
 
         eventModel
-            .findEventByMeetupId(userId, meetupId)
+            .findEventByMeetupIdForUser(userId, meetupId)
             .then(function (event) {
-                 res.json(event);
+                    res.json(event);
                 },
                 function (err) {
                     res.statusCode(400).send(err);
                 });
     }
+
+    function findEventByMeetupId (req, res) {
+        var meetupId = req.params.meetupId;
+
+        eventModel
+            .findEventByMeetupId(meetupId)
+            .then(function (event) {
+                    res.json(event);
+                },
+                function (err) {
+                    res.statusCode(400).send(err);
+                });
+    }
+
+    function updateEventAndUSerReferences(req, res) {
+        var eventId = req.params.eventId;
+        var userId = req.params.userId;
+        eventModel
+            .addUserToEvent(userId, eventId)
+            .then(
+                function(event){
+                    memberModel
+                        .addEventReferenceToUser(userId, eventId)
+                        .then(
+                            function(user){
+                                res.json(event);
+                            });
+                }
+            );
+    }
+
+    function deleteEvent (req, res) {
+        var eventId = req.params.eventId;
+
+        eventModel
+            .removeEvent(eventId)
+            .then(function (event) {
+                    res.json(event);
+                },
+                function (err) {
+                    res.statusCode(400).send(err);
+                });
+    }
+
+
 };

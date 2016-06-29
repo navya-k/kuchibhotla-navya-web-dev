@@ -14,8 +14,12 @@ module.exports = function(){
         removeEvent      : removeEvent,
         findEventById           : findEventById,
         findEventByMeetupId : findEventByMeetupId,
+        findEventByMeetupIdForUser : findEventByMeetupIdForUser,
         findAllEventsWithUser : findAllEventsWithUser,
         
+        addUserToEvent : addUserToEvent,
+        removeUserFromEvent : removeUserFromEvent,
+       
         // Comments
 
         addCommentToEvent : addCommentToEvent,
@@ -27,7 +31,7 @@ module.exports = function(){
     function createEvent(userId, event){
         delete event._id;
         var newEvent = {
-            user : userId,
+            users : [userId],
             eventObject : event,
         };
         return Event.create(newEvent);
@@ -40,17 +44,42 @@ module.exports = function(){
     function findEventById(eventId){
         return Event.findById(eventId);
     }
-    function findEventByMeetupId(userId, meetupId){
+    function findEventByMeetupIdForUser(userId, meetupId){
         return Event.findOne({user: userId, 'eventObject.id' : meetupId});
     }
- 
-    function removeEvent(userId, eventId){
-        return Event.remove({_id :eventId, user : userId});
+
+    function findEventByMeetupId(meetupId){
+        return Event.findOne({'eventObject.id' : meetupId});
+    }
+    
+    function addUserToEvent(userId, eventId){
+        return Event.findById(eventId ,
+            function (err, event) {
+                if (!err) {
+                    event.users.push(userId);
+                    event.save();
+                }
+            }
+        );
+    }
+    function removeUserFromEvent(userId, eventId){
+        return Event.findById(eventId,
+            function (err, event) {
+                if(!err) {
+                    for(var user in event.users){
+                        if(event.users[user] == userId) {
+                            event.users.splice(user, 1);
+                            event.save();
+                        }
+                    }
+                }});
+    }
+    
+    function removeEvent(eventId){
+        return Event.remove({_id :eventId});
     }
 
-    function findAllEventsWithUser(userId){
-        return Event.find({user : userId});
-    }
+   
 
     function addCommentToEvent(eventId,commentId){
         return Event.findById(eventId ,
@@ -77,5 +106,9 @@ module.exports = function(){
                 }});
     }
 
+    function findAllEventsWithUser(userId){
+        return Event.find({users : {"$in" : [userId]}});
+    }
+ 
 
 };

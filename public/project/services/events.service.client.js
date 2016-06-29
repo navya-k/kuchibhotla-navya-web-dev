@@ -18,9 +18,12 @@
             findEventById        : findEventById,
             findFavEventById    : findFavEventById,
             findMeetupEventForUser    : findMeetupEventForUser,
-            addEventToUser       : addEventToUser,
+            createEventForUser       : createEventForUser,
             removeEventFromUser  : removeEventFromUser,
-            findEventsForUser    : findEventsForUser            
+            findEventsForUser    : findEventsForUser,
+            findEventByMeetupId : findEventByMeetupId,
+            updateEventAndUSerReferences : updateEventAndUSerReferences,
+            removeEvent : removeEvent
         };
         return api;
 
@@ -37,13 +40,11 @@
             return $http.jsonp(url);
         }
          
-        function addEventToUser(userId, event) {
+        function createEventForUser(userId, event) {
             return $http.post("/project/api/user/"+userId+"/event",event);
         }
 
-        function removeEventFromUser(userId, eventId) {
-            return $http.get("/project/api/user/"+userId+"/event/"+eventId);
-        }
+        
         function findFavEventById(userId, eventId) {
             return $http.get("/project/api/user/"+userId+"/favourite/"+eventId);
         }
@@ -54,5 +55,26 @@
         function findEventsForUser(userId) {
             return $http.get("/project/api/user/"+userId+"/events");
         }
+        
+        function findEventByMeetupId(meetupId){
+            return $http.get("/project/api/meetupevent/"+meetupId);
+        }
+
+        function updateEventAndUSerReferences(userId, eventId){
+            return $http.get("/project/api/user/"+userId+"/event/"+eventId+"/update");
+        }
+
+        function removeEventFromUser(userId, eventId) {
+            return $http.get("/project/api/user/"+userId+"/event/"+eventId);
+        }
+
+        function removeEvent(eventId) {
+            return $http.delete("/project/api/event/"+eventId);
+        }
+
+
+        
     }
+    
+    
 })();

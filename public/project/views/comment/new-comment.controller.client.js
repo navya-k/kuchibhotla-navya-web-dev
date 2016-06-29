@@ -8,7 +8,8 @@
 
         vm.eventId = $routeParams.eventId;
         vm.currentUser = $rootScope.currentUser;
-
+        vm.groupdUrl = $routeParams.groupId;
+        vm.meetupId  = $routeParams.meetupId;
         vm.addComment = addComment;
 
         function addComment(comment){
@@ -16,7 +17,8 @@
                 .createComment(comment, vm.currentUser._id, vm.eventId, vm.currentUser.username)
                 .then(
                     function(response) {
-                        $location.url("/user/"+vm.currentUser._id+"/favourite/"+vm.eventId);
+
+                        $location.url("/group/"+vm.groupdUrl+"/event/"+vm.meetupId);
                     },function(err){
                         console.log(err);
                     });

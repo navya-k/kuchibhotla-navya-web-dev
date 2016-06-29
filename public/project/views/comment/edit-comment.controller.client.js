@@ -9,7 +9,9 @@
         vm.eventId = $routeParams.eventId;
         vm.currentUser = $rootScope.currentUser;
         vm.commentId = $routeParams.commentId;
-
+        vm.groupdUrl = $routeParams.groupId;
+        vm.meetupId  = $routeParams.meetupId;
+        
         vm.updateComment = updateComment;
         vm.deleteComment = deleteComment;
 
@@ -31,7 +33,7 @@
                 .updateComment(comment)
                 .then(
                     function (response) {
-                        $location.url("/user/" + vm.currentUser._id + "/favourite/" + vm.eventId);
+                        $location.url("/group/"+vm.groupdUrl+"/event/"+vm.meetupId);
                     }, function (err) {
                         console.log(err);
                     });
@@ -43,7 +45,7 @@
                 .deleteComment(commentId, vm.eventId)
                 .then(
                     function (response) {
-                        $location.url("/user/" + vm.currentUser._id + "/favourite/" + vm.eventId);
+                        $location.url("/group/"+vm.groupdUrl+"/event/"+vm.meetupId);
                     }, function (err) {
                         console.log(err);
                     });

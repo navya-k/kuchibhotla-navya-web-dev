@@ -46,11 +46,10 @@
 
             <div ng-if="model.isFavourite" class="well">
 
-                <div  class="text-right">
-                    <a class="btn btn-success" href="#/user/{{model.currentUser._id}}/event/{{model.eventId}}/comment/new">Add a Comment</a>
+                <div ng-if="!model.commentExists" class="text-right">
+                    <a class="btn btn-success" href="#/user/{{model.currentUser._id}}/group/{{model.event.group.urlname}}/meetup/{{model.event.id}}/event/{{model.eventId}}/comment/new">Add a Comment</a>
+
                 </div>
-
-
 
                 <div class="row" ng-repeat="comment in model.comments">
                     <hr>
@@ -60,15 +59,10 @@
                         <span ng-if="comment.username!=model.currentUser.username"  class="glyphicon glyphicon glyphicon-thumbs-up pull-right"></span>
                         <p class="comment">{{comment.text}}</p>
                         <div ng-if="comment.username==model.currentUser.username"  class="text-right">
-                            <a class="btn btn-success" href="#/user/{{model.currentUser._id}}/event/{{model.eventId}}/comment/{{comment._id}}/edit">Edit Comment</a>
+                            <a class="btn btn-success" href="#/user/{{model.currentUser._id}}/group/{{model.event.group.urlname}}/meetup/{{model.event.id}}/event/{{model.eventId}}/comment/{{comment._id}}/edit">Edit Comment</a>
                         </div>
                     </div>
-
-
                 </div>
-
-
-
             </div>
         </div>
     </div>

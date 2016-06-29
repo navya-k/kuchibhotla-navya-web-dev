@@ -13,7 +13,7 @@
             EventService
                 .findEventsForUser(vm.userId)
                 .then(function(response){
-                    console.log("event in fa "+response.data);
+                    console.log("event in fa "+response);
                     var results = [];
                     for(var event in response.data){
                         var currentEvent = response.data[event].eventObject;

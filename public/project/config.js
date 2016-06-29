@@ -62,15 +62,6 @@
                 }
             })
 
-            .when("/user/:userId/favourite/:eventId", {
-                templateUrl: "views/event/event-detail.view.client.html",
-                controller: "FavouriteDetailController",
-                controllerAs: "model",
-                resolve: {
-                    loggedIn : checkLoggedIn
-                }
-            })
-            
  
             .when("/group/:groupUrl/event/:meetupId", {
                 templateUrl: "views/event/event-detail.view.client.html",
@@ -81,7 +72,7 @@
                 }
             })
 
-            .when("/user/:userId/event/:eventId/comment/new", {
+            .when("/user/:userId/group/:groupId/meetup/:meetupId/event/:eventId/comment/new", {
                 templateUrl: "views/comment/new-comment.view.client.html",
                 controller: "NewCommentController",
                 controllerAs: "model",
@@ -90,7 +81,7 @@
                 }
             })
 
-            .when("/user/:userId/event/:eventId/comment/:commentId/edit", {
+            .when("/user/:userId/group/:groupId/meetup/:meetupId/event/:eventId/comment/:commentId/edit", {
                 templateUrl: "views/comment/edit-comment.view.client.html",
                 controller: "EditCommentController",
                 controllerAs: "model",

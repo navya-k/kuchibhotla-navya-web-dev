@@ -25,10 +25,11 @@
             </div>
             <div class="col-md-5">
                 <!-- while searching using search text-->
-                <h3 ng-if="model.currentUser && model.searchText">
+                <h3 ng-if="model.currentUser">
+                 <!--&& model.searchText">-->
                     <a href="#/group/{{event.group.urlname}}/event/{{event.id}}">{{event.name}}</a></h3>
-                <h3 ng-if="model.currentUser && !model.searchText">
-                    <a href="#/user/{{model.currentUser._id}}/favourite/{{event.dbId}}">{{event.name}}</a></h3>
+                <!--<h3 ng-if="model.currentUser && !model.searchText">-->
+                    <!--<a href="#/user/{{model.currentUser._id}}/favourite/{{event.dbId}}">{{event.name}}</a></h3>-->
                 <h3 ng-if="!model.currentUser"><a>{{event.name}}</a></h3>
                 <h4><strong>Group: </strong>{{event.group.name}}</h4>
                 <h4><strong>Location: </strong>{{event.venue.city}}, {{event.venue.localized_country_name}}.</h4>
