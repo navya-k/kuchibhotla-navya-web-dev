@@ -9,8 +9,8 @@
 
     var key = "003a55920363a2c3c483c437b6f69";
 
-    var urlBase = "http://api.meetup.com/2/open_events?&sign=true&key=API_KEY&category=9,14,32,23&text=TEXT&page=20&format=json&callback=JSON_CALLBACK&fields=group_photo";
-    var eventUrl = "http://api.meetup.com/GROUP_URL/events/EVENT_ID?&sign=true&photo-host=public&fields=group_photo&key=API_KEY&format=json&callback=JSON_CALLBACK";
+    var urlBase = "https://api.meetup.com/2/open_events?&sign=true&key=API_KEY&category=9,14,32,23&text=TEXT&page=20&format=json&callback=JSON_CALLBACK&fields=group_photo";
+    var eventUrl = "https://api.meetup.com/GROUP_URL/events/EVENT_ID?&sign=true&photo-host=public&fields=group_photo&key=API_KEY&format=json&callback=JSON_CALLBACK";
 
     function EventService($http) {
         var api = {
