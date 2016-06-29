@@ -17,7 +17,8 @@
             deleteUser: deleteUser,
             findCommentsForUser : findCommentsForUser,
             addCommentToUser : addCommentToUser,
-            removeCommentFromUser : removeCommentFromUser
+            removeCommentFromUser : removeCommentFromUser,
+            getUsers : getUsers
         };
 
         return api;
@@ -92,6 +93,11 @@
         function removeCommentFromUser(userId, commentId) {
             var url = "/project/api/user/"+ userId+"/comment/"+commentId;
             return $http.delete(url);
+        }
+        
+        function getUsers(){
+            var url = "/project/api/users/";
+            return $http.get(url);
         }
 
         

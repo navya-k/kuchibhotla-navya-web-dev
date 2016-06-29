@@ -97,10 +97,14 @@
                     loggedIn : checkLoggedIn
                 }
             })
+
+            
+            
             .otherwise ({
                 redirectTo : "/"
             });
 
+       
         // q library within angular helps establish promises
         function checkLoggedIn(UserService, $location, $q, $rootScope) {
 

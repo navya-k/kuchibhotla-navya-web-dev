@@ -90,6 +90,23 @@
                 }
             })
 
+            .when("/admin/view/:userId", {
+                templateUrl: "views/user/view-user.view.client.html",
+                controller: "ViewUserController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn : checkLoggedIn
+                }
+            })
+
+            .when("/admin/edit/:userId", {
+                templateUrl: "views/user/edit-user.view.client.html",
+                controller: "EditUserController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn : checkLoggedIn
+                }
+            })
         
             .otherwise ({
                 redirectTo : "/"

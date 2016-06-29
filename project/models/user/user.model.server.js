@@ -79,8 +79,7 @@ module.exports = function(){
 
     function removeEventFromUser(userId, eventId){
         return Member.findById(userId,
-            function (err, user) {
-                console.log("user Model remove"+user);
+            function (err, user) { 
                 if(!err) {
                 for(var event in user.events){
                     if(user.events[event] == eventId) {
@@ -107,7 +106,7 @@ module.exports = function(){
     }
 
     function getUsers(){
-        return Member.find();
+        return Member.find({userType : "user"},'username email', function(err, docs){});
     }
 
     function findAllCommentsForEvent(userId){

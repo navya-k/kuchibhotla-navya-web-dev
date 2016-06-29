@@ -30,8 +30,8 @@ module.exports = function(app, models) {
     app.get("/project/api/user/:userId/comments", findAllCommentsForEvent);
     app.get("/project/api/user/:userId/comment/:commentId", addCommentToUser);
     app.delete("/project/api/user/:userId/comment/:commentId", removeCommentFromUser);
-
-
+    app.get("/project/api/users", getUsers);
+    
     var googleConfig = {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -324,6 +324,19 @@ module.exports = function(app, models) {
             .then(function(user){
                 res.send(200);
             },
+                function (err) {
+                    res.statusCode(404).send(err);
+                }
+            );
+    }
+
+    function getUsers(req, res){
+         
+        memberModel
+            .getUsers()
+            .then(function(users){
+                    res.json(users);
+                },
                 function (err) {
                     res.statusCode(404).send(err);
                 }

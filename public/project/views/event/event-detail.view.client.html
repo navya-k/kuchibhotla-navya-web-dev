@@ -32,10 +32,10 @@
         </div>
         <div class="col-md-3">
 
-            <a ng-if="!model.isFavourite" class="btn btn-primary margin-button"
+            <a ng-if="!model.isFavourite && model.currentUser.userType=='user'" class="btn btn-primary margin-button"
                ng-click="model.addToFavourites(model.event)">
                 Add to Favourites</a>
-            <a ng-if="model.isFavourite" class="btn btn-primary margin-button"
+            <a ng-if="model.isFavourite && model.currentUser.userType=='user'" class="btn btn-primary margin-button"
                ng-click="model.removeFromFavourites(model.eventId)">
                 Remove from Favourites</a>
 
