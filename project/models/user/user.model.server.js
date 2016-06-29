@@ -22,7 +22,10 @@ module.exports = function(){
         findEventForUser        : findEventForUser,
 
         removeEventFromUser     : removeEventFromUser,
-        addEventReferenceToUser : addEventReferenceToUser
+        addEventReferenceToUser : addEventReferenceToUser,
+        findAllCommentsForEvent : findAllCommentsForEvent,
+        addCommentToUser : addCommentToUser,
+        removeCommentFromUser : removeCommentFromUser
     };
 
     return api;
@@ -106,4 +109,35 @@ module.exports = function(){
     function getUsers(){
         return Member.find();
     }
+
+    function findAllCommentsForEvent(userId){
+        return Member.findOne({_id:userId}).select('likedComments');
+    }
+
+    function addCommentToUser(userId, commentId){
+        return Member.findById(userId ,
+            function (err, user) {
+                if (!err) {
+                    user.likedComments.push(commentId);
+                    user.save();
+                }
+            }
+        );
+    }
+
+
+
+    function removeCommentFromUser(userId, commentId){
+        return Member.findById(userId,
+            function (err, user) {
+                if(!err) {
+                    for(var comment in user.likedComments){
+                        if(user.likedComments[comment] == commentId) {
+                            user.likedComments.splice(comment, 1);
+                            user.save();
+                        }
+                    }
+                }});
+    }
+
 };

@@ -56,11 +56,22 @@
                     <div class="col-md-12">
 
                         <strong>{{comment.username}}</strong>
-                        <span ng-if="comment.username!=model.currentUser.username"  class="glyphicon glyphicon glyphicon-thumbs-up pull-right"></span>
-                        <p class="comment">{{comment.text}}</p>
-                        <div ng-if="comment.username==model.currentUser.username"  class="text-right">
-                            <a class="btn btn-success" href="#/user/{{model.currentUser._id}}/group/{{model.event.group.urlname}}/meetup/{{model.event.id}}/event/{{model.eventId}}/comment/{{comment._id}}/edit">Edit Comment</a>
-                        </div>
+
+                        <a
+                           ng-click="model.upVoteComment(model.currentUser._id, comment._id)"
+                           class="pull-right">
+                            <span ng-if="comment.username!=model.currentUser.username && !comment.liked"
+                                  class="glyphicon glyphicon-thumbs-up pull-right"></span></a>
+                        <a
+                           ng-click="model.downVoteComment(model.currentUser._id, comment._id)"
+                        class="pull-right">
+                            <span ng-if="comment.username!=model.currentUser.username && comment.liked"
+                                  class="glyphicon glyphicon-thumbs-down"></span></a>
+
+                            <p class="comment">{{comment.text}}</p>
+                            <div ng-if="comment.username==model.currentUser.username"  class="text-right">
+                                <a class="btn btn-success" href="#/user/{{model.currentUser._id}}/group/{{model.event.group.urlname}}/meetup/{{model.event.id}}/event/{{model.eventId}}/comment/{{comment._id}}/edit">Edit Comment</a>
+                            </div>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,10 @@
             findUserByUsername : findUserByUsername,
             findUserByUsernameAndPassword: findUserByUsernameAndPassword,
             updateUser: updateUser,
-            deleteUser: deleteUser
+            deleteUser: deleteUser,
+            findCommentsForUser : findCommentsForUser,
+            addCommentToUser : addCommentToUser,
+            removeCommentFromUser : removeCommentFromUser
         };
 
         return api;
@@ -75,5 +78,22 @@
             var url = "/project/api/user/" + userId;
             return $http.delete(url);
         }
+
+        function findCommentsForUser(userId) {
+            var url = "/project/api/user/"+ userId+"/comments";
+            return $http.get(url);
+        }
+
+        function addCommentToUser(userId, commentId) {
+            var url = "/project/api/user/"+ userId+"/comment/"+commentId;
+            return $http.get(url);
+        }
+
+        function removeCommentFromUser(userId, commentId) {
+            var url = "/project/api/user/"+ userId+"/comment/"+commentId;
+            return $http.delete(url);
+        }
+
+        
     }
 })();

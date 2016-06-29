@@ -23,6 +23,7 @@ module.exports = function() {
             displayName: String
         },
         events    : [{type: mongoose.Schema.Types.ObjectId, ref: "Event"}],
+        likedComments : [{type: mongoose.Schema.Types.ObjectId, ref: "Comment"}],
         dateCreated : {type: Date, default : Date.now}
     }, {collection : "project.user"});
     

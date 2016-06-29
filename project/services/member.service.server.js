@@ -2,7 +2,7 @@
  * Created by Navya on 6/3/2016.
  */
 var passportProj = require('passport');
-var LocalStrat = require('passport-local').Strategy; 
+var LocalStrat = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var bcryptProj = require("bcrypt-nodejs");
 
@@ -27,15 +27,18 @@ module.exports = function(app, models) {
     app.get("/project/api/user/:userId", findUserById);
     app.put("/project/api/user/:userId",  updateUser);
     app.delete("/project/api/user/:userId", deleteUser);
+    app.get("/project/api/user/:userId/comments", findAllCommentsForEvent);
+    app.get("/project/api/user/:userId/comment/:commentId", addCommentToUser);
+    app.delete("/project/api/user/:userId/comment/:commentId", removeCommentFromUser);
 
-    
+
     var googleConfig = {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_CALLBACK_URL
     };
 
-    passportProj.use('proj', new LocalStrat(localStrategy)); 
+    passportProj.use('proj', new LocalStrat(localStrategy));
     passportProj.use('google', new GoogleStrategy(googleConfig, googleLogin));
     passportProj.serializeUser(serializeProjectUser);
     passportProj.deserializeUser(deserializeProjectUser);
@@ -47,14 +50,14 @@ module.exports = function(app, models) {
             .then(
                 function(user) {
                     if(user && bcryptProj.compareSync(password,user.password)) {
-                         done(null, user);
+                        done(null, user);
                     } else {
                         // in case of error intercept from passport will abort and return with failure
-                         done(null, false);
+                        done(null, false);
                     }
                 },
                 function(err) {
-                     done(err);
+                    done(err);
                 }
             );
     }
@@ -290,4 +293,40 @@ module.exports = function(app, models) {
             );
     }
 
+
+    function findAllCommentsForEvent(req, res){
+        var userId = req.params.userId;
+        memberModel
+            .findAllCommentsForEvent(userId)
+            .then(function(comments){
+                    res.json(comments);
+                },
+                function(err){
+                    cb(null, err);
+                });
+    }
+
+    function addCommentToUser(req, res){
+        var userId = req.params.userId;
+        var commentId = req.params.commentId;
+        memberModel
+            .addCommentToUser(userId, commentId)
+            .then(function(user){
+                res.send(200);
+            });
+    }
+
+    function removeCommentFromUser(req, res){
+        var userId = req.params.userId;
+        var commentId = req.params.commentId;
+        memberModel
+            .removeCommentFromUser(userId, commentId)
+            .then(function(user){
+                res.send(200);
+            },
+                function (err) {
+                    res.statusCode(404).send(err);
+                }
+            );
+    }
 };

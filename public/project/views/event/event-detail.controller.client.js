@@ -3,7 +3,7 @@
         .module("Project")
         .controller("EventDetailController", EventDetailController);
 
-    function EventDetailController($sce, $location,$route, $routeParams, EventService, $rootScope,CommentService) {
+    function EventDetailController($sce, $location,$route, $routeParams, EventService, MemberService, $rootScope,CommentService) {
         var vm = this;
         vm.groupUrl = $routeParams.groupUrl;
         vm.meetupId = $routeParams.meetupId;
@@ -12,6 +12,8 @@
 
         vm.addToFavourites = addToFavourites;
         vm.removeFromFavourites = removeFromFavourites;
+        vm.upVoteComment = upVoteComment;
+        vm.downVoteComment = downVoteComment;
 
         function init() {
             // find the event in event collection
@@ -20,11 +22,7 @@
                 .findEventByMeetupId(vm.meetupId)
                 .then(
                     function(response){
-                        if(response.data){
-                            // TODO FIX - data might be unavAILABLE
-                            console.log("init "+response);
-                            console.log("init  data"+response.data);
-                            console.log("init data dataobj "+response.data.eventObject);
+                        if(response.data){ 
                             vm.event = response.data.eventObject;
                             vm.eventId = response.data._id;
                             // if user is in list of references - redirect
@@ -39,14 +37,30 @@
                                 .findCommentsForEvent(vm.eventId)
                                 .then(function(comments){
                                     vm.comments = comments.data;
-console.log(vm.comments);
-                                    for(var comment in vm.comments) {
-                                        if(vm.comments[comment]._user == vm.currentUser._id){
-                                            console.log(vm.comments);
-                                            vm.commentExists = true;
-                                            break;
-                                        }
-                                    }
+                                    MemberService
+                                        .findCommentsForUser(vm.currentUser._id)
+                                        .then(function(commentResponse) { 
+                                            var likedcomments = commentResponse.data.likedComments;
+                                            if (likedcomments) {
+                                                for (var comment in vm.comments) {
+                                                    var index = likedcomments.indexOf(vm.comments[comment]._id); 
+                                                    if (index != -1) { 
+                                                        vm.comments[comment].liked = true;
+
+                                                    }
+                                                    else { 
+                                                        vm.comments[comment].liked = false;
+                                                    }
+                                                }
+                                            }
+                                            for (var comment in vm.comments) {
+                                                if (vm.comments[comment]._user == vm.currentUser._id) {
+                                                    vm.commentExists = true;
+                                                    break;
+                                                }
+                                            }
+                                        });
+
                                 });
 
                         }
@@ -103,17 +117,12 @@ console.log(vm.comments);
         }
 
         function removeFromFavourites(eventId) {
-            // TODO FIX
-            console.log(eventId);
+            // TODO FIX 
             EventService
                 .removeEventFromUser(vm.currentUser._id, eventId)
                 .then(
-                    function(response) {
-                        console.log("removed after "+response);
-                        // if no users delete event
-                        console.log("removed data "+response.data);
-                        console.log("removed data users "+response.data.users);
-                        console.log("removed data users  length"+response.data.users.length);
+                    function(response) { 
+                        // if no users delete event 
                         if (response.data.users && response.data.users.length == 1) {
                             EventService
                                 .removeEvent(eventId)
@@ -129,5 +138,29 @@ console.log(vm.comments);
             return $sce.trustAsHtml(vm.event.description);
 
         }
+        function upVoteComment(userId, commentId) {
+         
+            MemberService
+                .addCommentToUser(userId, commentId)
+                .then(function(response){
+                    init();
+                },
+                function(err){
+                    console.log(err);
+                });
+        }
+
+        function downVoteComment(userId, commentId) {
+          
+            MemberService
+                .removeCommentFromUser(userId, commentId)
+                .then(function(response){
+                        init();
+                    },
+                    function(err){
+                        console.log(err);
+                    });
+        }
+
     }
 })();

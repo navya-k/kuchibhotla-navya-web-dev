@@ -20,8 +20,7 @@ module.exports = function(app, models) {
         eventModel
             .findAllEventsWithUser(userId)
             .then(function(events){
-                    res.send(events);
-                    console.log("foundd yaaa");
+                    res.send(events); 
                 },
                 function(err){
                     res.statusCode(404).send(err);
