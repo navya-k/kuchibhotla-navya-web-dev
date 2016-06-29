@@ -10,7 +10,7 @@ module.exports = function() {
         
         user : {type: mongoose.Schema.Types.ObjectId, ref: "Member"},
         eventObject    : Object,
-        comments    : [{type: mongoose.Schema.Types.ObjectId, ref: "Comment"}],
+        comments    : [{type: mongoose.Schema.Types.ObjectId, ref: "Co"}],
         dateCreated : {type: Date, default : Date.now}
     },{collection : "project.event"});
     

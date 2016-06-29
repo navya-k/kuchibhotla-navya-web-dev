@@ -10,7 +10,11 @@ module.exports = function(){
 
 
     var api = {
-        createComment : createComment
+        createComment : createComment,
+        findAllCommentsForEvent : findAllCommentsForEvent,
+        findCommentById : findCommentById,
+        updateComment : updateComment,
+        deleteComment : deleteComment
 
     };
 
@@ -20,10 +24,29 @@ module.exports = function(){
         var newComment = {
             _user : userId,
             _event : eventId,
-            text : comment.text
+            text : comment.text,
+            username : comment.username
         };
         return Comment.create(newComment);
     }
 
+    function findAllCommentsForEvent(eventId){
+        return Comment.find({_event : eventId});
+    }
 
+    function findCommentById(commentId){
+        return Comment.findById(commentId);
+    }
+
+    function updateComment(commentId, comment){
+        delete comment._id;
+        return Comment.update({_id : commentId},
+            {
+                $set : comment
+            });
+    }
+    function deleteComment(commentId){
+        return Comment.remove({_id :commentId});
+    }
+    
 };

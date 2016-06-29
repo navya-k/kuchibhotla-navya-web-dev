@@ -14,6 +14,7 @@ module.exports = function() {
         eventId     : String,
         liked       : Boolean,
         myComment   : Boolean,
+        username    : String,
         dateCreated : {type: Date, default : Date.now}
     },{collection : "project.comment"});
 

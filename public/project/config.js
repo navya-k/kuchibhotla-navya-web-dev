@@ -90,8 +90,16 @@
                 }
             })
 
-        
+            .when("/user/:userId/event/:eventId/comment/:commentId/edit", {
+                templateUrl: "views/comment/edit-comment.view.client.html",
+                controller: "EditCommentController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn : checkLoggedIn
+                }
+            })
 
+        
             .otherwise ({
                 redirectTo : "/"
             });

@@ -3,7 +3,7 @@
         .module("Project")
         .controller("FavouriteDetailController", FavouriteDetailController);
 
-    function FavouriteDetailController($sce, $location,$route, $routeParams, EventService, $rootScope) {
+    function FavouriteDetailController($sce, $location,$route, $routeParams, EventService, $rootScope, CommentService) {
         var vm = this;
         vm.groupUrl = $routeParams.groupUrl;
         vm.eventId = $routeParams.eventId;
@@ -17,9 +17,15 @@
             EventService
                 .findFavEventById(vm.currentUser._id, vm.eventId)
                 .then(
-                    function(response){ 
+                    function(response){
                         vm.event = response.data.eventObject;
                         vm.isFavourite = true;
+                        CommentService
+                            .findCommentsForEvent(vm.eventId)
+                            .then(function(comments){
+                                vm.comments = comments.data;
+                            });
+
                     },
                     function(err){
                         vm.isFavourite = false; 

@@ -18,7 +18,8 @@ module.exports = function(){
         
         // Comments
 
-        addCommentToEvent : addCommentToEvent
+        addCommentToEvent : addCommentToEvent,
+        deleteCommentForEvent : deleteCommentForEvent
     };
 
     return api;
@@ -61,4 +62,20 @@ module.exports = function(){
             }
         );
     }
+
+
+    function deleteCommentForEvent(eventId, commentId){
+        return Event.findById(eventId,
+            function (err, event) {
+                if(!err) {
+                    for(var comment in event.comments){
+                        if(event.comments[comment] == commentId) {
+                            event.comments.splice(comment, 1);
+                            event.save();
+                        }
+                    }
+                }});
+    }
+
+
 };
