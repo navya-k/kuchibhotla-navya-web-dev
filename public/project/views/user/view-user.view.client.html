@@ -27,12 +27,13 @@
                 <div class="form-group" ng-if="model.user.events.length > 0">
                     <label>Event Ids : </label>
                     <div ng-repeat="event in model.user.events">
-                    <p>{{event}}</p></div>
+                        <p>{{event}}</p></div>
 
-                <div class="form-group" ng-if="model.user.comments.length > 0">
-                    <label>Comment Ids : </label>
-                    <div ng-repeat="comment in model.user.comments">
-                        <p>{{comment}}</p></div>
+                    <div class="form-group" ng-if="model.user.comments.length > 0">
+                        <label>Comment Ids : </label>
+                        <div ng-repeat="comment in model.user.comments">
+                            <p>{{comment}}</p></div>
+                    </div>
                 </div>
             </div>
         </div>
