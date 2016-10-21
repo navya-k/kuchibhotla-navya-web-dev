@@ -8,7 +8,7 @@ Two web applications include:
    An app that let's you hunt and explore events around an area based on your search criteria. Sign up and you can manage your 
    favourite events.
 	
-2. Web App Maker:
+2. Web App Maker :
    Web App Maker allows users to create and use online, mobile friendly, Websites. Users can create Websites. 
    There are two types of users. Those who can create Websites as developers and end users who visit the Websites created by the 
    developers. Only developers can create and modify the Websites. End users can not modify the Websites, they can only interact 
